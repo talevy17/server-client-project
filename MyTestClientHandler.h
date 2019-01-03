@@ -6,6 +6,7 @@
 
 class MyTestClientHandler : public ClientHandler {
     //solution solve(problem p);
+    virtual void handleClient(ofstream &output, ifstream &input);
 };
 
 
