@@ -1,12 +1,11 @@
 #ifndef SERVER_CLIENT_PROJECT_MYSERIALSERVER_H
 #define SERVER_CLIENT_PROJECT_MYSERIALSERVER_H
-
 #include "server_side.h"
 
 using namespace server_side;
 
 class MySerialServer : public Server{
-    virtual void open(int port, ClientHandler* client);
+    virtual void open(int port, ClientHandler client);
 
     virtual void stop();
 };
