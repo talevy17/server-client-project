@@ -5,7 +5,7 @@
 using namespace server_side;
 
 class MySerialServer : public Server{
-    virtual void open(int port, ClientHandler client);
+    virtual void open(int port, ClientHandler *client);
 
     virtual void stop();
 };
