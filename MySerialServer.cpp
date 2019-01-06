@@ -1,9 +1,9 @@
 #include "MySerialServer.h"
 
-void open(int port, ClientHandler client){
+void MySerialServer :: open(int port, ClientHandler* client){
 
 }
 
-void stop(){
+void MySerialServer :: stop(){
 
 }

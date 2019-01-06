@@ -3,13 +3,13 @@
 
 using namespace std;
 
-template<class T>
+template<class Problem, class Solution>
 class CacheManager {
-    virtual void save(T solution) = 0;
+    virtual void save(Problem problem, Solution solution) = 0;
 
-    virtual T getSolution(T problem) = 0;
+    virtual Solution getSolution(Problem problem) = 0;
 
-    virtual bool isThereASolution(T problem) = 0;
+    virtual bool isThereASolution(Problem problem) = 0;
 
 };
 

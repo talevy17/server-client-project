@@ -1,5 +1,5 @@
 #include "MyTestClientHandler.h"
 
-void handleClient(ofstream &output, ifstream &input){
+void MyTestClientHandler :: handleClient(ofstream &output, ifstream &input){
 
 }
