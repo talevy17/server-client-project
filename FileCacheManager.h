@@ -55,9 +55,9 @@ public:
      * split problem and solution by end of line
      */
     void saveToFile() {
+        //open the file
         fstream probSolMap;
-        //check if open as trunc or add bool to problem and solution
-        ofstream cacheManage(FILE_NAME, ios::in | ios::app);
+        ofstream cacheManage(FILE_NAME, ios::trunc);
         if (!cacheManage.is_open()) { throw "file not found"; }
         //first - insert the size of map
         cacheManage << this->problemSolutionMap.size() << endl;

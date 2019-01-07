@@ -5,8 +5,7 @@
 #include "ClientHandler.h"
 
 class MyTestClientHandler : public ClientHandler {
-    //solution solve(problem p);
-    virtual void handleClient(ofstream &output, ifstream &input);
+    virtual void handleClient(int sockfd);
 };
 
 
