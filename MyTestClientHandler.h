@@ -5,7 +5,9 @@
 #include "ClientHandler.h"
 
 class MyTestClientHandler : public ClientHandler {
+public:
     virtual void handleClient(int sockfd);
+    //string readLine();
 };
 
 

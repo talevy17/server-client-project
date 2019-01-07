@@ -6,7 +6,8 @@
 using namespace std;
 
 class ClientHandler {
-    virtual void handleClient(ofstream &output, ifstream &input) = 0;
+public:
+    virtual void handleClient(int sockfd) = 0;
 };
 
 #endif //SERVER_CLIENT_PROJECT_CLIENTHANDLER_H
