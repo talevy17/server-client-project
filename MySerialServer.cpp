@@ -1,5 +1,10 @@
 #include "MySerialServer.h"
 
+/**
+* open a socket and handle the client's requests.
+* @param port int
+* @param client ClientHandler*
+*/
 void MySerialServer:: open(int port, ClientHandler *client) {
     int opt = 1;
     struct sockaddr_in server, clie;
@@ -42,8 +47,15 @@ void MySerialServer:: open(int port, ClientHandler *client) {
     }
 }
 
+/**
+ * is there a client connected to the server
+ * @return bool isConnected
+ */
 bool MySerialServer::isConnected() {return this->isRunning;}
 
+/**
+ * stops the current connection.
+ */
 void MySerialServer:: stop() {
     if (this->isRunning) {
         close(this->sockfd);
