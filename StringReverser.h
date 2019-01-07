@@ -3,9 +3,8 @@
 
 #include "string"
 #include "Solver.h"
-
-class StringReverser {
-    //virtual Solution solve(string problem);
+class StringReverser : public Solver<std::string, std::string> {
+    virtual std::string solve(std::string problem);
 };
 
 
