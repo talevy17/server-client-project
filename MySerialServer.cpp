@@ -36,16 +36,18 @@ void MySerialServer:: open(int port, ClientHandler *client) {
         perror("failed opening socket");
         exit(EXIT_FAILURE);
     }
-    this->isConnected = true;
-    while (this->isConnected) {
+    this->isRunning = true;
+    while (this->isRunning) {
         client->handleClient(this->newsockfd);
     }
 }
 
+bool MySerialServer::isConnected() {return this->isRunning;}
+
 void MySerialServer:: stop() {
-    if (this->isConnected) {
+    if (this->isRunning) {
         close(this->sockfd);
         close(this->newsockfd);
     }
-    this->isConnected = false;
+    this->isRunning = false;
 }

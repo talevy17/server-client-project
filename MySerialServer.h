@@ -13,13 +13,15 @@ using namespace server_side;
 class MySerialServer : public Server {
     int sockfd;
     int newsockfd;
-    bool isConnected;
+    bool isRunning;
 
 public:
 
     virtual void open(int port, ClientHandler* client);
 
     virtual void stop();
+
+    virtual bool isConnected();
 };
 
 #endif //SERVER_CLIENT_PROJECT_MYSERIALSERVER_H
