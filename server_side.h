@@ -8,6 +8,8 @@ namespace server_side {
 
         virtual void open(int port, ClientHandler* client) = 0;
 
+        virtual bool isConnected() = 0;
+
         virtual void stop() = 0;
     };
 }
