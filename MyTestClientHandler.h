@@ -3,11 +3,25 @@
 
 
 #include "ClientHandler.h"
+#include "CacheManager.h"
+#include "Solver.h"
+
+using namespace std;
 
 class MyTestClientHandler : public ClientHandler {
+    CacheManager<string,string>* manager;
+    Solver<string,string>* solver;
+    int sockfd;
+    bool stop = false;
 public:
+    MyTestClientHandler(CacheManager<string, string>* cacheManager,
+            Solver<string,string>* solver){
+        this->manager = cacheManager;
+        this->solver = solver;
+    }
     virtual void handleClient(int sockfd);
-    //string readLine();
+    string readLine();
+    bool shouldStop();
 };
 
 

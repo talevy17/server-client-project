@@ -1,27 +1,36 @@
+#include <sys/socket.h>
+#include <unistd.h>
+#include <strings.h>
+#include <cstring>
 #include "MyTestClientHandler.h"
 
+#define BUF 256
+
 void MyTestClientHandler::handleClient(int sockfd) {
-    //read line from input stream
-    //check if there is solution
-    //return it if there is
-    //what if there is no solution
-    //send it to output stream
+//if there is no input
+    this->sockfd = sockfd;
+    string problem = readLine();
+    string solution;
+    if (this->manager->isThereASolution(problem)) {
+        solution = this->manager->getSolution(problem);
+    } else {
+        solution = this->solver->solve(problem);
+    }
+    ::send(this->sockfd, solution.c_str() , strlen(solution.c_str()), 0);
 }
 
-/*
-string handleClient :: readLine() {
+string MyTestClientHandler::readLine() {
     ssize_t valread;
-    this->isRunning = true;
     char buffer[BUF] = {0};
-    while (this->isRunning) {
-        listen(this->sockfd, 5);
-        valread = read(this->newsockfd, buffer, sizeof(buffer));
-        if (valread < 0) {
-            perror("Error reading from socket");
-        }
-        vector<double> values = xmlDataSplitter(buffer);
-        this->data.setFlightData(values);
+    listen(this->sockfd, 5);
+    valread = read(this->sockfd, buffer, sizeof(buffer));
+    if (valread < 0) {
+        perror("Error reading from socket");
     }
-    return "exit";
+    std::string myString(buffer, BUF);
+    return buffer;
 }
- */
+
+bool MyTestClientHandler::shouldStop(){
+    return this->stop;
+}

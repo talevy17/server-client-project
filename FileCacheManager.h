@@ -9,11 +9,9 @@
 
 using namespace std;
 
-template<class Problem, class Solution>
-class FileCacheManager : public CacheManager<Problem, Solution> {
-    map<Problem, Solution> problemSolutionMap;
+class FileCacheManager : public CacheManager<string, string> {
+    map<string,string> problemSolutionMap;
 public:
-    typedef map<Problem, Solution> psMap;
 
     /**
      * constructor
@@ -32,10 +30,9 @@ public:
         probSolMap.open(FILE_NAME, ios::in | ios::app);
         if (!probSolMap.is_open()) { throw "file not found"; }
         //load to map
-        string key, value;
-        int size;
-        probSolMap >> size;
-        for (int i = 0; i < size; i++) {
+        string key;
+        string value;
+        while (!probSolMap.eof()) {
             probSolMap >> key >> value;
             this->problemSolutionMap.insert(pair<string, string>(key, value));
         }
@@ -46,7 +43,7 @@ public:
      * @param problem
      * @param solution
      */
-    void save(Problem problem, Solution solution) {
+    void save(string problem, string solution) {
         this->problemSolutionMap[problem] = solution;
     }
 
@@ -59,10 +56,9 @@ public:
         fstream probSolMap;
         ofstream cacheManage(FILE_NAME, ios::trunc);
         if (!cacheManage.is_open()) { throw "file not found"; }
-        //first - insert the size of map
-        cacheManage << this->problemSolutionMap.size() << endl;
-        for (psMap p : this->problemSolutionMap) {
-            cacheManage << p.first << endl << p.second << endl;
+        //save to file
+        for (pair<string,string> ps : this->problemSolutionMap) {
+            cacheManage << ps.first << endl << ps.second << endl;
         }
     }
 
@@ -71,7 +67,7 @@ public:
      * @param problem
      * @return solution
      */
-    Solution getSolution(Problem problem) {
+    string getSolution(string problem) {
         return this->problemSolutionMap[problem];
     }
 
@@ -80,7 +76,7 @@ public:
      * @param problem
      * @return true- if there is solution , false - else
      */
-    bool isThereASolution(Problem problem) {
+    bool isThereASolution(string problem) {
         return (this->problemSolutionMap.count(problem) != 0);
     }
 

@@ -5,6 +5,7 @@ using namespace std;
 
 template<class Problem, class Solution>
 class CacheManager {
+public:
     virtual void save(Problem problem, Solution solution) = 0;
 
     virtual Solution getSolution(Problem problem) = 0;
