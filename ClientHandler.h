@@ -8,6 +8,8 @@ using namespace std;
 class ClientHandler {
 public:
     virtual void handleClient(int sockfd) = 0;
+
+    virtual bool shouldStop() = 0;
 };
 
 #endif //SERVER_CLIENT_PROJECT_CLIENTHANDLER_H

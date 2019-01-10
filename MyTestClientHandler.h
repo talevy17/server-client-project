@@ -12,13 +12,10 @@ class MyTestClientHandler : public ClientHandler {
     CacheManager<string,string>* manager;
     Solver<string,string>* solver;
     int sockfd;
-    bool stop = false;
+    bool stop;
 public:
     MyTestClientHandler(CacheManager<string, string>* cacheManager,
-            Solver<string,string>* solver){
-        this->manager = cacheManager;
-        this->solver = solver;
-    }
+            Solver<string,string>* solver);
     virtual void handleClient(int sockfd);
     string readLine();
     bool shouldStop();

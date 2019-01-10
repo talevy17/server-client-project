@@ -6,6 +6,14 @@
 
 #define BUF 256
 
+
+MyTestClientHandler::MyTestClientHandler(CacheManager<string, string> *cacheManager,
+                                         Solver<string, string> *solver) {
+    this->manager = cacheManager;
+    this->solver = solver;
+    this->stop = false;
+}
+
 /**
  * the function read line - gets problem
  * and check if there is an available solution
@@ -13,9 +21,12 @@
  * @param sockfd
  */
 void MyTestClientHandler::handleClient(int sockfd) {
-//if there is no input
     this->sockfd = sockfd;
     string problem = readLine();
+    if (problem == "end"){
+        this->stop = true;
+        return;
+    }
     string solution;
     //gets the solution
     if (this->manager->isThereASolution(problem)) {
