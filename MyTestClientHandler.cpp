@@ -6,19 +6,30 @@
 
 #define BUF 256
 
+/**
+ * the function read line - gets problem
+ * and check if there is an available solution
+ * if there isn't - solve and return it to the server.
+ * @param sockfd
+ */
 void MyTestClientHandler::handleClient(int sockfd) {
 //if there is no input
     this->sockfd = sockfd;
     string problem = readLine();
     string solution;
+    //gets the solution
     if (this->manager->isThereASolution(problem)) {
         solution = this->manager->getSolution(problem);
     } else {
         solution = this->solver->solve(problem);
     }
-    ::send(this->sockfd, solution.c_str() , strlen(solution.c_str()), 0);
+    ::send(this->sockfd, solution.c_str(), strlen(solution.c_str()), 0);
 }
 
+/**
+ * the function read line by gets input from the server
+ * @return string - problem
+ */
 string MyTestClientHandler::readLine() {
     ssize_t valread;
     char buffer[BUF] = {0};
@@ -31,6 +42,9 @@ string MyTestClientHandler::readLine() {
     return buffer;
 }
 
-bool MyTestClientHandler::shouldStop(){
+/**
+ * @return true - if should stop, false - else
+ */
+bool MyTestClientHandler::shouldStop() {
     return this->stop;
 }
