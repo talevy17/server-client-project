@@ -2,7 +2,7 @@
 
 static void* threadLoop(MySerialServer* server, ClientHandler *client) {
     server->toggle();
-    while (client->shouldStop()) {
+    while (!client->shouldStop()) {
         client->handleClient(server->getSocket());
     }
     server->stop();
@@ -49,7 +49,7 @@ void MySerialServer:: open(int port, ClientHandler *client) {
         exit(EXIT_FAILURE);
     }
     thread t1(threadLoop,this, client);
-    t1.detach();
+    t1.join();
 }
 
 /**

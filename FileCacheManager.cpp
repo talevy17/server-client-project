@@ -66,5 +66,5 @@ string FileCacheManager::getSolution(string problem) {
  * @return true- if there is solution , false - else
  */
 bool FileCacheManager::isThereASolution(string problem) {
-    return (this->problemSolutionMap.count(problem) != 0);
+    return this->problemSolutionMap.find(problem) != this->problemSolutionMap.end();
 }
