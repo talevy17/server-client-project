@@ -1,11 +1,11 @@
 #include "MySerialServer.h"
 
-static void* threadLoop(MySerialServer& server, ClientHandler *client) {
-    server.toggle();
+static void* threadLoop(MySerialServer* server, ClientHandler *client) {
+    server->toggle();
     while (client->shouldStop()) {
-        client->handleClient(server.getSocket());
+        client->handleClient(server->getSocket());
     }
-    server.stop();
+    server->stop();
 }
 
 /**
@@ -16,7 +16,6 @@ static void* threadLoop(MySerialServer& server, ClientHandler *client) {
 void MySerialServer:: open(int port, ClientHandler *client) {
     int opt = 1;
     struct sockaddr_in server, clie;
-
     // Creating socket file descriptor
     if ((sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == 0) {
         perror("socket failed");
@@ -49,7 +48,8 @@ void MySerialServer:: open(int port, ClientHandler *client) {
         perror("failed opening socket");
         exit(EXIT_FAILURE);
     }
-    thread t1(threadLoop,*this, client);
+    thread t1(threadLoop,this, client);
+    t1.detach();
 }
 
 /**
