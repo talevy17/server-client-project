@@ -1,5 +1,13 @@
 #include "MySerialServer.h"
 
+static void* threadLoop(MySerialServer& server, ClientHandler *client) {
+    server.toggle();
+    while (client->shouldStop()) {
+        client->handleClient(server.getSocket());
+    }
+    server.stop();
+}
+
 /**
 * open a socket and handle the client's requests.
 * @param port int
@@ -41,10 +49,7 @@ void MySerialServer:: open(int port, ClientHandler *client) {
         perror("failed opening socket");
         exit(EXIT_FAILURE);
     }
-    this->isRunning = true;
-    while (this->isRunning) {
-        client->handleClient(this->newsockfd);
-    }
+    thread t1(threadLoop,*this, client);
 }
 
 /**
@@ -63,3 +68,7 @@ void MySerialServer:: stop() {
     }
     this->isRunning = false;
 }
+
+const int MySerialServer::getSocket() const {return this->newsockfd;}
+
+void MySerialServer::toggle() {this->isRunning = true;}

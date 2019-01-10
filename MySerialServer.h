@@ -2,12 +2,11 @@
 #define SERVER_CLIENT_PROJECT_MYSERIALSERVER_H
 
 #include "server_side.h"
-#include "vector"
 #include <netdb.h>
 #include <sys/socket.h>
 #include <unistd.h>
 #include <netinet/in.h>
-#include "strings.h"
+#include <thread>
 
 using namespace server_side;
 
@@ -32,6 +31,9 @@ public:
     * stops the current connection.
     */
     virtual void stop();
+
+    const int getSocket() const;
+    void toggle();
 
     /**
     * is there a client connected to the server
