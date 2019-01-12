@@ -14,19 +14,12 @@ int Node::getRow() const {return this->row;}
 
 Node Node::goDown() {return Node(this->row + 1, this->col);}
 
-Node Node::goDownLeft() {return Node(this->row + 1, this->col -1);}
-
 Node Node::goLeft() {return Node(this->row, this->col - 1);}
 
-Node Node::goDownRight() {return Node(this->row + 1, this->col + 1);}
 
 Node Node::goRight() {return Node(this->row, this->col + 1);}
 
 Node Node::goUp() {return Node(this->row - 1, this->col);}
-
-Node Node::goUpLeft() {return Node(this->row - 1, this->col - 1);}
-
-Node Node::goUpRight() {return Node(this->row - 1, this->col + 1);}
 
 bool Node::equals(Node other) {
     return this->row == other.getRow() && this->col == other.getCol();

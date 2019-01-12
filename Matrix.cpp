@@ -33,8 +33,7 @@ bool Matrix::validStep(Node node) {
 std::vector<State<Node>> Matrix::getAllPossibleStates(State<Node> *state) {
     std::vector<State<Node>> result;
     Node curr = state->getState();
-    std::vector<Node> steps = {curr.goDownLeft(), curr.goDown(), curr.goLeft(), curr.goDownRight(), curr.goRight(),
-                               curr.goUpLeft(), curr.goUp(), curr.goUpRight()};
+    std::vector<Node> steps = {curr.goDown(), curr.goLeft(), curr.goRight(), curr.goUp()};
     for (Node step : steps) {
         if (validStep(step)) {
             result.push_back(State<Node>(step, (*this)[step], state));

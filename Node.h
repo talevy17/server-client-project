@@ -18,10 +18,6 @@ public:
     Node goDown();
     Node goRight();
     Node goLeft();
-    Node goUpRight();
-    Node goUpLeft();
-    Node goDownRight();
-    Node goDownLeft();
     bool equals(Node other);
 };
 
