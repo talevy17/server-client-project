@@ -1,35 +1,39 @@
-/*
+
 #include <iostream>
-#include "MySerialServer.h"
-#include "MyTestClientHandler.h"
-#include "FileCacheManager.h"
-#include "StringReverser.h"
-
-int main() {
-
-    FileCacheManager manager;
-    StringReverser stringReverser;
-    MyTestClientHandler myTestClientHandler(&manager, &stringReverser);
-    MySerialServer s;
-    s.open(5400, &myTestClientHandler);
-    while (true) {}
-    //manager.saveToFile();
-
-}
-
-*/
-
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <errno.h>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
+#include "Matrix.h"
 
 using namespace std;
 
 int main() {
 
-    cout << "hi"<< endl;
+    int n = 2;
+    int m = 5;
+    int** arr = new int*[n];
+    for (int i = 0; i < n; i++) {
+        arr[i] = new int[m];
+    }
+    int k = 0;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j ++) {
+            arr[i][j] = k;
+            k++;
+        }
+    }
+    /*for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j ++) {
+            cout << arr[i][j] << endl;
+        }
+    }*/
+    Matrix mat(n, m, arr);
+    State<Node> init = mat.getInitialState();
+    vector<State<Node>> states = mat.getAllPossibleStates(&init);
+    for (State<Node> state : states) {
+        cout << state.getCost() << endl;
+    }
+    /*for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j ++) {
+            cout << mat[Node(i,j)] << endl;
+        }
+    }*/
 }
+

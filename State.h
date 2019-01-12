@@ -21,7 +21,7 @@ public:
     }
     double getCost() const {return this->cost;}
     State<T>* getFather() {return this->cameFrom;}
-
+    T getState() const {return state;}
 };
 
 
