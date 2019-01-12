@@ -1,6 +1,3 @@
-//
-// Created by tal on 1/12/19.
-//
 
 #ifndef SERVER_CLIENT_PROJECT_QUEUE_H
 #define SERVER_CLIENT_PROJECT_QUEUE_H

@@ -1,26 +1,60 @@
-//
-// Created by tal on 1/12/19.
-//
+
 
 #include "Node.h"
 
+/**
+ * default CTOR, initiates values to 0.
+ */
 Node::Node() {this->row = 0; this->col = 0;}
 
+/**
+* CTOR.
+* @param i
+* @param j
+*/
 Node::Node(int i, int j) {this->row = i; this->col = j;}
 
+/**
+ * column getter.
+ * @return this->col
+ */
 int Node::getCol() const {return this->col;}
 
+/**
+* row getter
+* @return this->row
+*/
 int Node::getRow() const {return this->row;}
 
+/**
+ * move down the matrix.
+ * @return Node(i+1,j)
+ */
 Node Node::goDown() {return Node(this->row + 1, this->col);}
 
+/**
+ * move left the matrix.
+ * @return Node(i,j-1)
+ */
 Node Node::goLeft() {return Node(this->row, this->col - 1);}
 
-
+/**
+ * move right the matrix.
+ * @return Node(i,j+1)
+ */
 Node Node::goRight() {return Node(this->row, this->col + 1);}
 
+/**
+ * move up the matrix.
+ * @return Node(i - 1,j)
+ */
 Node Node::goUp() {return Node(this->row - 1, this->col);}
 
+/**
+ * overriding the equals method, as part of the assumption that every elements as an equals method.
+ * @param other
+ * @return
+ */
 bool Node::equals(Node other) {
     return this->row == other.getRow() && this->col == other.getCol();
 }
