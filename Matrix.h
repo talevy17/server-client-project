@@ -13,6 +13,8 @@ class Matrix : public Searchable<Node> {
     int n;
     int m;
     int **matrix;
+
+    bool validStep(Node node);
 public:
     Matrix(int rows, int cols, int **maze);
 
@@ -22,7 +24,7 @@ public:
 
     virtual State<Node> getGoalState();
 
-    virtual std::vector<State<Node>> getAllPossibleStates();
+    virtual std::vector<State<Node>> getAllPossibleStates(State<Node>* state);
 };
 
 
