@@ -1,19 +1,30 @@
+#include <iostream>
 #include "MySerialServer.h"
 
 static void *threadLoop(int sockfd, ClientHandler *client, bool* isRunning) {
+    bool first = true;
     while (*isRunning) {
         //Accept and incoming connection
         socklen_t addrlen = sizeof(sockaddr_in);
         struct sockaddr_in clie;
-        int newsockfd;
-        newsockfd = accept(sockfd, (struct sockaddr *) &clie, &addrlen);
+        //if this is not the first client - wait only 1 sec for connection
+        if (!first) {
+            timeval timeout;
+            timeout.tv_sec = 1;
+            timeout.tv_usec = 0;
+            setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));
+        }
+        int newsockfd = accept(sockfd, (struct sockaddr *) &clie, &addrlen);
         if (newsockfd < 0) {
-            perror("failed opening socket");
-            exit(EXIT_FAILURE);
+            if (errno != EWOULDBLOCK) {
+                perror("other error");
+                exit(EXIT_FAILURE);
+            }
         }
         while (!client->shouldStop()) {
             client->handleClient(newsockfd);
         }
+        first = false;
         close(newsockfd);
     }
     pthread_exit(nullptr);

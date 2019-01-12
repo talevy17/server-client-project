@@ -1,10 +1,8 @@
+
 #include <iostream>
-#include "MySerialServer.h"
-#include "MyTestClientHandler.h"
-#include "FileCacheManager.h"
-#include "StringReverser.h"
 #include "Matrix.h"
-#include "Node.h"
+
+using namespace std;
 
 int main() {
 
@@ -42,3 +40,4 @@ int main() {
         }
     }*/
 }
+
