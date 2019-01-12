@@ -25,6 +25,8 @@ public:
     virtual State<Node> getGoalState();
 
     virtual std::vector<State<Node>> getAllPossibleStates(State<Node>* state);
+
+    virtual std::string to_string();
 };
 
 

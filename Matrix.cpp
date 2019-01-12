@@ -3,6 +3,7 @@
 //
 
 #include "Matrix.h"
+#define TO_CHAR 48
 
 Matrix::Matrix(int rows, int cols, int **maze) {
     this->n = rows;
@@ -47,4 +48,14 @@ std::vector<State<Node>> Matrix::getAllPossibleStates(State<Node> *state) {
         }
     }
     return result;
+}
+
+std::string Matrix::to_string() {
+    std::string result;
+    for (int row = 0; row < this->n; row++) {
+        for (int col = 0; col < this->m; col++) {
+            result.push_back(this->matrix[row][col] + TO_CHAR);
+        }
+        result.push_back(';');
+    }
 }

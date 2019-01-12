@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS -pthread)
 
 add_executable(server_client_project
-        main.cpp server_side.h MySerialServer.cpp MySerialServer.h ClientHandler.h MyTestClientHandler.cpp MyTestClientHandler.h Solver.h CacheManager.h FileCacheManager.cpp FileCacheManager.h StringReverser.cpp StringReverser.h State.cpp State.h Searchable.cpp Searchable.h Searcher.cpp Searcher.h Node.cpp Node.h Matrix.cpp Matrix.h)
+        main.cpp server_side.h MySerialServer.cpp MySerialServer.h ClientHandler.h MyTestClientHandler.cpp MyTestClientHandler.h Solver.h CacheManager.h FileCacheManager.cpp FileCacheManager.h StringReverser.cpp StringReverser.h State.h Searchable.h Searcher.cpp Searcher.h Node.cpp Node.h Matrix.cpp Matrix.h DepthFirstSearch.cpp DepthFirstSearch.h)
