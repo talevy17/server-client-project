@@ -1,11 +1,22 @@
 #include "MySerialServer.h"
 
-static void* threadLoop(MySerialServer* server, ClientHandler *client) {
-    server->toggle();
-    while (!client->shouldStop()) {
-        client->handleClient(server->getSocket());
+static void *threadLoop(int sockfd, ClientHandler *client, bool* isRunning) {
+    while (*isRunning) {
+        //Accept and incoming connection
+        socklen_t addrlen = sizeof(sockaddr_in);
+        struct sockaddr_in clie;
+        int newsockfd;
+        newsockfd = accept(sockfd, (struct sockaddr *) &clie, &addrlen);
+        if (newsockfd < 0) {
+            perror("failed opening socket");
+            exit(EXIT_FAILURE);
+        }
+        while (!client->shouldStop()) {
+            client->handleClient(newsockfd);
+        }
+        close(newsockfd);
     }
-    server->stop();
+    pthread_exit(nullptr);
 }
 
 /**
@@ -13,9 +24,9 @@ static void* threadLoop(MySerialServer* server, ClientHandler *client) {
 * @param port int
 * @param client ClientHandler*
 */
-void MySerialServer:: open(int port, ClientHandler *client) {
+void MySerialServer::open(int port, ClientHandler *client) {
     int opt = 1;
-    struct sockaddr_in server, clie;
+    struct sockaddr_in server;
     // Creating socket file descriptor
     if ((sockfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == 0) {
         perror("socket failed");
@@ -40,15 +51,8 @@ void MySerialServer:: open(int port, ClientHandler *client) {
         perror("listen");
         exit(EXIT_FAILURE);
     }
-
-    //Accept and incoming connection
-    socklen_t addrlen = sizeof(sockaddr_in);
-    newsockfd = accept(sockfd, (struct sockaddr *) &clie, &addrlen);
-    if (newsockfd < 0) {
-        perror("failed opening socket");
-        exit(EXIT_FAILURE);
-    }
-    thread t1(threadLoop,this, client);
+    this->isRunning = true;
+    thread t1(threadLoop,sockfd, client, &isRunning);
     t1.join();
 }
 
@@ -56,19 +60,14 @@ void MySerialServer:: open(int port, ClientHandler *client) {
  * is there a client connected to the server
  * @return bool isConnected
  */
-bool MySerialServer::isConnected() {return this->isRunning;}
+bool MySerialServer::isConnected() { return this->isRunning; }
 
 /**
  * stops the current connection.
  */
-void MySerialServer:: stop() {
+void MySerialServer::stop() {
     if (this->isRunning) {
         close(this->sockfd);
-        close(this->newsockfd);
     }
     this->isRunning = false;
 }
-
-const int MySerialServer::getSocket() const {return this->newsockfd;}
-
-void MySerialServer::toggle() {this->isRunning = true;}

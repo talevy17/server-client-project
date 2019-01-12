@@ -15,7 +15,6 @@ using namespace server_side;
  */
 class MySerialServer : public Server {
     int sockfd;
-    int newsockfd;
     bool isRunning;
 
 public:
@@ -31,9 +30,6 @@ public:
     * stops the current connection.
     */
     virtual void stop();
-
-    const int getSocket() const;
-    void toggle();
 
     /**
     * is there a client connected to the server
