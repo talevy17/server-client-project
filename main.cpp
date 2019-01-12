@@ -1,3 +1,4 @@
+/*
 #include <iostream>
 #include "MySerialServer.h"
 #include "MyTestClientHandler.h"
@@ -14,4 +15,21 @@ int main() {
     while (true) {}
     //manager.saveToFile();
 
+}
+
+*/
+
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <errno.h>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+
+    cout << "hi"<< endl;
 }
