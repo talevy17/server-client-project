@@ -1,6 +1,3 @@
-//
-// Created by tal on 1/12/19.
-//
 
 #include "Matrix.h"
 
@@ -30,10 +27,7 @@ bool Matrix::validStep(Node node) {
     if ((node.getRow() >= this->n) || (node.getRow() < 0) || (node.getCol() >= this->m) || (node.getCol() < 0)) {
         return false;
     }
-    if ((*this)[node] == -1) {
-        return false;
-    }
-    return true;
+    return ((*this)[node] != -1);
 }
 
 std::vector<State<Node>> Matrix::getAllPossibleStates(State<Node> *state) {
