@@ -28,6 +28,10 @@ int main() {
     }*/
     Matrix mat(n, m, arr);
     State<Node> init = mat.getInitialState();
+    State<Node> init2 = mat.getInitialState();
+    State<Node> goal = mat.getGoalState();
+    cout << init.equals(init2) << endl;
+    cout << init.equals(goal) << endl;
     vector<State<Node>> states = mat.getAllPossibleStates(&init);
     for (State<Node> state : states) {
         cout << state.getCost() << endl;

@@ -22,6 +22,7 @@ public:
     Node goUpLeft();
     Node goDownRight();
     Node goDownLeft();
+    bool equals(Node other);
 };
 
 

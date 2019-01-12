@@ -17,7 +17,7 @@ public:
         this->cameFrom = father;
     }
     bool equals(State<T> s) {
-        return s.equals(this->state);
+        return s.getState().equals(this->state);
     }
     double getCost() const {return this->cost;}
     State<T>* getFather() {return this->cameFrom;}
