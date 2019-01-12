@@ -25,5 +25,5 @@ State<Node> Matrix::getGoalState() {
 
 std::vector<State<Node>> Matrix::getAllPossibleStates() {
     std::vector<State<Node>> result;
-    
+
 }
