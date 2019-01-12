@@ -45,7 +45,8 @@ string MyTestClientHandler::readLine() {
     ssize_t valread;
     char buffer[BUF] = {0};
     listen(this->sockfd, 5);
-    valread = read(this->sockfd, buffer, sizeof(buffer));
+    //valread = read(this->sockfd, buffer, sizeof(buffer));
+    valread = read(sockfd,buffer,BUF);
     if (valread < 0) {
         perror("Error reading from socket");
     }
