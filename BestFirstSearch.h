@@ -13,9 +13,11 @@
 template<class Solution, class T>
 class BestFirstSearch : public SearcherWrapper<Solution, T> {
 public:
-    BestFirstSearch(PriorityQueue<State<T>> *pq) : SearcherWrapper<Solution, T>(pq) {}
+    BestFirstSearch(PriorityQueue<State<T>*> *pq) : SearcherWrapper<Solution, T>(pq) {}
 
-    virtual Solution search(Searchable<T> searchable) {}
+    virtual Solution search(Searchable<T> searchable) {
+        
+    }
 };
 
 

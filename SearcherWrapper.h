@@ -17,14 +17,14 @@
 template<class Solution, class T>
 class SearcherWrapper : public Searcher<Solution, T> {
 protected:
-    PriorityQueue<State<T>> *openList;
+    PriorityQueue<State<T>*> *openList;
 
     int evaluatedNodes;
     /**
     * CTOR
     * @param pq
    */
-    SearcherWrapper(PriorityQueue<State<Node>> *pq) : openList(pq), evaluatedNodes(0) {}
+    SearcherWrapper(PriorityQueue<State<T>*> *pq) : openList(pq), evaluatedNodes(0) {}
 
     /**
      * pop an element from the list and add 1 to the evaluated nodes.
