@@ -29,18 +29,18 @@ int Matrix::operator[](Node node) {
 * returns the initial state, in this case, the [0][0] node.
 * @return initial state.
 */
-State<Node> Matrix::getInitialState() {
+State<Node>* Matrix::getInitialState() {
     Node node(0, 0);
-    return State<Node>(node, (*this)[node], nullptr);
+    return new State<Node>(node, (*this)[node], nullptr);
 }
 
 /**
  * goal state getter, in this case - the [n-1][m-1] node.
  * @return goal state.
  */
-State<Node> Matrix::getGoalState() {
+State<Node>* Matrix::getGoalState() {
     Node node(this->n - 1, this->m - 1);
-    return State<Node>(node, (*this)[node], nullptr);
+    return new State<Node>(node, (*this)[node], nullptr);
 }
 
 /**
@@ -60,13 +60,13 @@ bool Matrix::validStep(Node node) {
  * @param state State<Node>
  * @return vector<State<Node>> result.
  */
-std::vector<State<Node>> Matrix::getAllPossibleStates(State<Node> *state) {
-    std::vector<State<Node>> result;
+std::vector<State<Node>*> Matrix::getAllPossibleStates(State<Node> *state) {
+    std::vector<State<Node>*> result;
     Node curr = state->getState();
     std::vector<Node> steps = {curr.goDown(), curr.goLeft(), curr.goRight(), curr.goUp()};
     for (Node step : steps) {
         if (validStep(step)) {
-            result.push_back(State<Node>(step, (*this)[step], state));
+            result.push_back(new State<Node>(step, (*this)[step], state));
         }
     }
     return result;

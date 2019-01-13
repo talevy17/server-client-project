@@ -1,6 +1,4 @@
-//
-// Created by tal on 1/12/19.
-//
+
 
 #ifndef SERVER_CLIENT_PROJECT_SEARCHERWRAPPER_H
 #define SERVER_CLIENT_PROJECT_SEARCHERWRAPPER_H
@@ -11,16 +9,59 @@
 #include <string>
 #include "Node.h"
 
-class SearcherWrapper : public Searcher<std::string, Node> {
+/**
+ * a Wrapper class for the searcher algorithms.
+ * @tparam Solution
+ * @tparam T
+ */
+template<class Solution, class T>
+class SearcherWrapper : public Searcher<Solution, T> {
 protected:
-    PriorityQueue<State<Node>> *openList;
+    PriorityQueue<State<T>> *openList;
     int evaluatedNodes;
 
-    State<Node> popOpenList();
-public:
-    SearcherWrapper(PriorityQueue<State<Node>> *pq);
+    /**
+     * pop an element from the list and add 1 to the evaluated nodes.
+     * @return the popped element.
+     */
+    State<Node> popOpenList() {
+        if (!this->openList->isEmpty()) {
+            this->evaluatedNodes++;
+            return this->openList->pop();
+        }
+        return State<Node>(Node(-1, -1), -1, nullptr);
+    }
 
-    int getNumberOfNodesEvaluated();
+    /**
+     * track back the solution route for later evaluation.
+     * @param tail
+     * @param initState
+     * @return (Solution) vector<State<T>*> route.
+     */
+    Solution trackBack(State<T> *tail, State<T> *initState) {
+        std::vector<State<T> *> route;
+        while (!(*tail == *initState)) {
+            route.push_back(tail);
+            tail = tail->getFather();
+        }
+        return (Solution) route;
+    }
+
+public:
+    /**
+     * CTOR
+     * @param pq
+     */
+    SearcherWrapper(PriorityQueue<State<Node>> *pq) {
+        this->openList = pq;
+        this->evaluatedNodes = 0;
+    }
+
+    /**
+     * number of nodes evaluated getter.
+     * @return
+     */
+    int getNumberOfNodesEvaluated() { return this->evaluatedNodes; }
 
 };
 

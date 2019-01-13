@@ -10,7 +10,8 @@
 #include "SearcherWrapper.h"
 #include <string>
 
-class BestFirstSearch : public SearcherWrapper {
+template <class Solution, class T>
+class BestFirstSearch : public SearcherWrapper<Solution, T> {
 
 };
 
