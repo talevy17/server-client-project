@@ -51,7 +51,9 @@ public:
                 int nodeIndex = this->openList->find(state);
                 typedef typename std::vector<State<T> *>::iterator InputIterator;
                 InputIterator closedIter = this->findByVal(closed.begin(), closed.end(), state);
-                state->addCost(this->h(state->getState(), goal->getState()));
+                T curr = state->getState();
+                T goalState = goal->getState();
+                state->addCost(this->h(curr, goalState));
                 //if the node was never visited at all.
                 if (closedIter == closed.end() && nodeIndex == -1) {
                     this->openList->push(new State<T>(*state));
