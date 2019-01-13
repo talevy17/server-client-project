@@ -19,6 +19,11 @@ class SearcherWrapper : public Searcher<Solution, T> {
 protected:
     PriorityQueue<State<T>> *openList;
     int evaluatedNodes;
+    /**
+    * CTOR
+    * @param pq
+   */
+    SearcherWrapper(PriorityQueue<State<Node>> *pq) : openList(pq), evaluatedNodes(0) {}
 
     /**
      * pop an element from the list and add 1 to the evaluated nodes.
@@ -33,7 +38,8 @@ protected:
     }
 
     /**
-     * track back the solution route for later evaluation.
+     * track back the solution r21:22: error: invalid abstract parameter type ‘Searchable<Node>’
+     virtual Solution search(Searchable<T> searchable) = 0;oute for later evaluation.
      * @param tail
      * @param initState
      * @return (Solution) vector<State<T>*> route.
@@ -48,14 +54,6 @@ protected:
     }
 
 public:
-    /**
-     * CTOR
-     * @param pq
-     */
-    SearcherWrapper(PriorityQueue<State<Node>> *pq) {
-        this->openList = pq;
-        this->evaluatedNodes = 0;
-    }
 
     /**
      * number of nodes evaluated getter.

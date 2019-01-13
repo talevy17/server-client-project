@@ -12,7 +12,7 @@
  * @tparam T
  */
 template<class T>
-class MinHeap : PriorityQueue<T> {
+class MinHeap : public PriorityQueue<T> {
     std::vector<T> elements;
 
     /**
@@ -131,7 +131,7 @@ public:
      */
     void replace(T element, int index) {
         //the index is invalid.
-        if (index >= this->elements.size()) {
+        if (index >= this->elements.size() || index < 0) {
             return;
         }
         //swap the index'th element.
