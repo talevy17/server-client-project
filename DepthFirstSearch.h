@@ -7,14 +7,16 @@
 #include "FirstSearchVisit.h"
 
 using namespace std;
-
-class DepthFirstSearch : public Searcher<string,Matrix> {
-    int evaluatedNodes;
-    FirstSearchVisit visitMatrix;
+template <class T>
+class DepthFirstSearch : public Searcher<string, T> {
+    vector<T> visit;
 public:
-    DepthFirstSearch(int i, int j);
-    virtual string search(Matrix matrix);
-    virtual int getNumberOfNodesEvaluated();
+    virtual string search(Searchable<T> searchable){
+       
+    }
+    virtual int getNumberOfNodesEvaluated(){
+
+    }
 };
 
 
