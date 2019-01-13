@@ -1,6 +1,4 @@
-//
-// Created by tal on 1/12/19.
-//
+
 
 #ifndef SERVER_CLIENT_PROJECT_SEARCHERWRAPPER_H
 #define SERVER_CLIENT_PROJECT_SEARCHERWRAPPER_H
@@ -11,16 +9,30 @@
 #include <string>
 #include "Node.h"
 
-class SearcherWrapper : public Searcher<std::string, Node> {
+template <class Solution, class T>
+class SearcherWrapper : public Searcher<Solution, T> {
 protected:
-    PriorityQueue<State<Node>> *openList;
+    PriorityQueue<State<T>> *openList;
     int evaluatedNodes;
 
-    State<Node> popOpenList();
-public:
-    SearcherWrapper(PriorityQueue<State<Node>> *pq);
+    State<Node> popOpenList(){
+        if (!this->openList->isEmpty()) {
+            this->evaluatedNodes++;
+            return this->openList->pop();
+        }
+        return State<Node>(Node(-1, -1), -1, nullptr);
+    }
 
-    int getNumberOfNodesEvaluated();
+    Solution trackBack(State<T> head) {
+        
+    }
+public:
+    SearcherWrapper(PriorityQueue<State<Node>> *pq) {
+        this->openList = pq;
+        this->evaluatedNodes = 0;
+    }
+
+    int getNumberOfNodesEvaluated(){return this->evaluatedNodes;}
 
 };
 
