@@ -55,6 +55,17 @@ Node Node::goUp() {return Node(this->row - 1, this->col);}
  * @param other
  * @return
  */
-bool Node::operator==(Node &other) {
+bool Node::operator==(const Node &other) {
     return this->row == other.getRow() && this->col == other.getCol();
+}
+
+Node::Node(const Node &other) {
+    this->col = other.getCol();
+    this->row = other.getRow();
+}
+
+Node& Node::operator=(const Node &other) {
+    this->col = other.getCol();
+    this->row = other.getRow();
+    return *this;
 }

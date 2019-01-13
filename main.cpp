@@ -78,6 +78,5 @@ int main() {
     }
     int nodes = bfs.getNumberOfNodesEvaluated();
     cout << nodes << endl;
-
 }
 

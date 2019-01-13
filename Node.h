@@ -65,7 +65,11 @@ public:
     * @param other
     * @return
     */
-    bool operator== (Node& other);
+    bool operator== (const Node& other);
+
+    Node(const Node &other);
+
+    Node &operator=(const Node &other);
 };
 
 

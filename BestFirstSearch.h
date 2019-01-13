@@ -18,56 +18,66 @@ public:
      * CTOR, initializes super class.
      * @param pq
      */
-    BestFirstSearch(PriorityQueue<State<T>*> *pq) : SearcherWrapper<Solution, T>(pq) {}
+    BestFirstSearch(PriorityQueue<State<T> *> *pq) : SearcherWrapper<Solution, T>(pq) {}
 
     /**
      * searches the cheapest path in the given graph.
      * @param searchable Searchable<T>*
      * @return Solution
      */
-    virtual Solution search(Searchable<T>* searchable) {
+    virtual Solution search(Searchable<T> *searchable) {
         //push the initial state to the queue.
-        this->openList->push(searchable->getInitialState());
-        std::unordered_set<State<T>*> closed;
+        State<T> *init = searchable->getInitialState();
+        this->openList->push(init);
+        std::vector<State<T> *> closed;
         //goal state for comparing purposes.
-        State<T>* goal = searchable->getGoalState();
+        State<T> *goal = searchable->getGoalState();
         while (!this->openList->isEmpty()) {
             //pop the minimum state.
-            State<T>* n = this->popOpenList();
-            closed.insert(n);
+            State<T> *n = this->popOpenList();
+            closed.push_back(n);
             //if the algorithm reached the goal, track back the route.
             if (*n == *goal) {
-                return this->trackBack(n, searchable->getInitialState());
+                Solution sol = this->trackBack(n, init);
+                closed.push_back(goal);
+                this->freeAllocTracker(closed);
+                return sol;
             }
             //create a vector of neighbors.
-            std::vector<State<T>*> adj = searchable->getAllPossibleStates(n);
+            std::vector<State<T> *> adj = searchable->getAllPossibleStates(n);
             //loop through all of the neighbors.
-            for (State<T>* state : adj) {
+            for (State<T> *state : adj) {
                 int nodeIndex = this->openList->find(state);
-                typename std::unordered_set<State<T>*> ::iterator closedIter = closed.find(state);
+                typedef typename std::vector<State<T> *>::iterator InputIterator;
+                InputIterator closedIter = this->findByVal(closed.begin(), closed.end(), state);
                 //if the node was never visited at all.
                 if (closedIter == closed.end() && nodeIndex == -1) {
-                    this->openList->push(state);
-                //the node was visited/
+                    this->openList->push(new State<T>(*state));
+                    //the node was visited/
                 } else {
                     //if it's not in openList
                     if (nodeIndex == -1) {
                         //if the cost is better than the one in the closed list.
                         if (*state < **closedIter) {
-                            this->openList->push(state);
+                            this->openList->push(new State<T>(*state));
                         }
-                    //it's in openList
+                        //it's in openList
                     } else {
                         //if the cost is better than the one in the openList, replace it.
-                        if (*state < *(this->openList->getElement(nodeIndex))) {
-                            this->openList->replace(state, nodeIndex);
+                        State<T>* temp = this->openList->getElement(nodeIndex);
+                        if (*state < *(temp)) {
+                            this->openList->replace(new State<T>(*state), nodeIndex);
+                            delete(temp);
                         }
                     }
                 }
+                delete(state);
             }
         } // end of while
         //if the algorithm reached this point, there is no path from the initial state to the goal state.
-        std::vector<State<T>*> vec;
+        closed.push_back(goal);
+        this->freeAllocTracker(closed);
+        std::vector<State<T> *> vec;
         return (Solution) vec;
     }
 };

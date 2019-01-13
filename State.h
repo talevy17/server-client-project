@@ -1,6 +1,3 @@
-//
-// Created by tal on 1/10/19.
-//
 
 #ifndef SERVER_CLIENT_PROJECT_STATE_H
 #define SERVER_CLIENT_PROJECT_STATE_H
@@ -17,7 +14,19 @@ public:
         this->cameFrom = father;
     }
 
-    bool operator==(State<T>& s) {
+    State(const State &other) {
+        this->state = other.getState();
+        this->cost = other.getCost();
+        this->cameFrom = other.cameFrom;
+    }
+
+    State &operator=(const State &other) {
+        this->state = other.getState();
+        this->cost = other.getCost();
+        this->cameFrom = other.cameFrom;
+    }
+
+    bool operator==(const State<T>& s) {
         return s.getState() == (this->state);
     }
 
@@ -27,19 +36,19 @@ public:
 
     T getState() const { return state; }
 
-    bool operator<(State<T>& other) {
+    bool operator<(const State<T>& other) {
         return ((this->cost) < other.getCost());
     }
 
-    bool operator>(State<T>& other) {
+    bool operator>(const State<T>& other) {
         return ((this->cost) > other.getCost());
     }
 
-    bool operator<=(State<T>& other) {
+    bool operator<=(const State<T>& other) {
         return ((this->cost) <= other.getCost());
     }
 
-    bool operator>=(State<T>& other) {
+    bool operator>=(const State<T>& other) {
         return ((this->cost) >= other.getCost());
     }
 };
