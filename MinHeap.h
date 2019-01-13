@@ -90,7 +90,7 @@ public:
     void push(T element) {
         this->elements.push_back(element);
         int i = this->elements.size() - 1;
-        while (i != 0 && this->elements.at(parent(i)) > this->elements.at(i)) {
+        while (i != 0 && *(this->elements.at(parent(i))) > *(this->elements.at(i))) {
             swap(i, parent(i));
             i = parent(i);
         }
@@ -117,7 +117,7 @@ public:
     int find(T element) {
         size_t size = this->elements.size();
         for (unsigned long i = 0; i < size; ++i) {
-            if (this->elements.at(i) == (element)) {
+            if (*(this->elements.at(i)) == *(element)) {
                 return i;
             }
         }
@@ -138,7 +138,7 @@ public:
         this->elements.at(index) = element;
         int i = index;
         //while the replaced element is smaller than his parent, swap them.
-        while (i != 0 && this->elements.at(parent(i)) > this->elements.at(i))
+        while (i != 0 && *(this->elements.at(parent(i))) > *(this->elements.at(i)))
         {
             swap(i, parent(i));
             i = parent(i);

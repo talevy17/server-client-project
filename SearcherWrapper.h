@@ -28,12 +28,12 @@ protected:
      * pop an element from the list and add 1 to the evaluated nodes.
      * @return the popped element.
      */
-    State<Node> popOpenList() {
+    State<T>* popOpenList() {
         if (!this->openList->isEmpty()) {
             this->evaluatedNodes++;
             return this->openList->pop();
         }
-        return State<Node>(Node(-1, -1), -1, nullptr);
+        return new State<Node>(Node(-1, -1), -1, nullptr);
     }
 
     /**

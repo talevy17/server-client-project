@@ -68,7 +68,7 @@ std::vector<State<Node>*> Matrix::getAllPossibleStates(State<Node> *state) {
     std::vector<Node> steps = {curr.goDown(), curr.goLeft(), curr.goRight(), curr.goUp()};
     for (Node step : steps) {
         if (validStep(step)) {
-            result.push_back(new State<Node>(step, (*this)[step], state));
+            result.push_back(new State<Node>(step, (*this)[step] + state->getCost(), state));
         }
     }
     return result;
