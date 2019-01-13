@@ -18,7 +18,7 @@ public:
      * @param searchable
      * @return Solution solution
      */
-    virtual Solution search(Searchable<T> searchable) = 0;
+    virtual Solution search(Searchable<T>* searchable) = 0;
 
     /**
      * query the amount of nodes developed throughout the search.

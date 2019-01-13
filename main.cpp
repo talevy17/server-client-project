@@ -70,6 +70,14 @@ int main() {
         }
         result.push_back(';');
     }
-    SearcherWrapper<std::string, Node>* sw = new BestFirstSearch<std::string, Node>(new MinHeap<State<Node>>);
+    BestFirstSearch<vector<State<Node>*>, Node> bfs(new MinHeap<State<Node>*>);
+    Matrix mat(n, m, arr);
+    vector<State<Node>*> res = bfs.search(&mat);
+    for (State<Node>* state: res) {
+        cout << state->getCost() << endl;
+    }
+    int nodes = bfs.getNumberOfNodesEvaluated();
+    cout << nodes << endl;
+
 }
 
