@@ -1,5 +1,6 @@
 
 #include "Matrix.h"
+
 #define TO_CHAR 48
 
 /**
@@ -13,6 +14,8 @@
 Matrix::Matrix(int rows, int cols, int **maze, Node beg, Node end) {
     this->n = rows;
     this->m = cols, this->matrix = maze;
+    this->initialState = beg;
+    this->goalState = end;
 }
 
 /**
@@ -31,18 +34,16 @@ int Matrix::operator[](Node node) {
 * returns the initial state, in this case, the [0][0] node.
 * @return initial state.
 */
-State<Node>* Matrix::getInitialState() {
-    Node node = this->initialState;
-    return new State<Node>(node, (*this)[node], nullptr);
+State<Node> *Matrix::getInitialState() {
+    return new State<Node>(this->initialState, (*this)[this->initialState], nullptr);
 }
 
 /**
  * goal state getter, in this case - the [n-1][m-1] node.
  * @return goal state.
  */
-State<Node>* Matrix::getGoalState() {
-    Node node = this->goalState;
-    return new State<Node>(node, (*this)[node], nullptr);
+State<Node> *Matrix::getGoalState() {
+    return new State<Node>(this->goalState, (*this)[this->goalState], nullptr);
 }
 
 /**
@@ -62,8 +63,8 @@ bool Matrix::validStep(Node node) {
  * @param state State<Node>
  * @return vector<State<Node>> result.
  */
-std::vector<State<Node>*> Matrix::getAllPossibleStates(State<Node> *state) {
-    std::vector<State<Node>*> result;
+std::vector<State<Node> *> Matrix::getAllPossibleStates(State<Node> *state) {
+    std::vector<State<Node> *> result;
     Node curr = state->getState();
     std::vector<Node> steps = {curr.goDown(), curr.goLeft(), curr.goRight(), curr.goUp()};
     for (Node step : steps) {

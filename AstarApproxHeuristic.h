@@ -7,8 +7,14 @@
 #include "Node.h"
 
 struct AstarApproxHeuristic {
-    int operator()(Node& current, Node& goalState) {
+    int operator()(Node current, Node goalState) {
         return abs(current.getRow() - goalState.getRow()) + abs(current.getCol() - goalState.getCol());
+    }
+};
+
+struct BestFsHeuristic {
+    int operator()(Node current, Node goalState) {
+        return 0;
     }
 };
 

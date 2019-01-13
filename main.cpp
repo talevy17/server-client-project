@@ -1,63 +1,49 @@
 #include <iostream>
 #include "Matrix.h"
-#include "MinHeap.h"
-#include "SearcherWrapper.h"
+#include "Interpreter.h"
 #include "BestFS_Astar.h"
-
-#include <map>
-#define TO_CHAR 48
+#include "AstarApproxHeuristic.h"
+#include "MinHeap.h"
 
 using namespace std;
 
+
 int main() {
-
-    int n = 2;
-    int m = 5;
-    int **arr = new int *[n];
-    for (int i = 0; i < n; i++) {
-        arr[i] = new int[m];
+    string input = "1,2,3 \n"
+                   "4,5,6 \n"
+                   "7,8,9 \n"
+                   "0,0 \n"
+                   "2,2 \n";
+    Interpreter i;
+    Matrix m = i.stringToMatrix(input);
+    cout << "done" << endl;
+    int rows = 5;
+    int cols = 5;
+    int** arr = new int*[rows];
+    for (int in = 0; in < rows; in++) {
+        arr[in] = new int[cols];
     }
-    int k = 0;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            arr[i][j] = k;
-            k++;
+    int k = 1;
+    for (int in = 0; in < rows; in ++) {
+        for (int j = 0; j < cols; j ++) {
+            arr[in][j] = k++;
         }
     }
-
-    /*for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j ++) {
-            cout << arr[i][j] << endl;
-        }
-    }*/
-
-    /*
->>>>>>> 8f39472fb299d56b954a71ac13a44af6d847c3d1
-    Matrix mat(n, m, arr);
-    State<Node> init = mat.getInitialState();
-    State<Node> init2 = mat.getInitialState();
-    State<Node> goal = mat.getGoalState();
-    vector<State<Node>> states = mat.getAllPossibleStates(&init);
-    MinHeap<State<Node>> heap;
-    for (State<Node> state : states) {
-        heap.push(state);
+    Matrix mat(5,5,arr,Node(0,0),Node(4,4));
+    BestFS_Astar<vector<State<Node>*>, Node,AstarApproxHeuristic>
+            astar(new MinHeap<State<Node>*>, AstarApproxHeuristic());
+    BestFS_Astar<vector<State<Node>*>, Node,BestFsHeuristic> bfs(new MinHeap<State<Node>*>, BestFsHeuristic());
+    vector<State<Node>*> astarRes = astar.search(&mat);
+    vector<State<Node>*> bfsRes = bfs.search(&mat);
+    cout <<"this is astar results:"<<endl;
+    for (State<Node>* state: astarRes) {
+        cout <<state->getCost()<<endl;
     }
-<<<<<<< HEAD
-    State<Node> state(Node(1,0), 4, nullptr);
-    int index = heap.find(state);
-    if (index == -1) {
-        cout<< "error"<<endl;
+    cout << "evaluated Nodes: "<<astar.getNumberOfNodesEvaluated()<<endl;
+    cout <<"**********************"<<endl;
+    cout <<"this is bfs results:"<<endl;
+    for (State<Node>* state: bfsRes) {
+        cout <<state->getCost()<<endl;
     }
-    cout<<heap.getElement(index).getCost()<<endl;
-    heap.replace(state, index);
-    cout<<heap.getElement(index).getCost()<<endl;
-=======
-     */
-
-    /*for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j ++) {
-            cout << mat[Node(i,j)] << endl;
-        }
-    }*/
-
+    cout << "evaluated Nodes: "<<bfs.getNumberOfNodesEvaluated()<<endl;
 }

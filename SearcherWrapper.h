@@ -48,6 +48,7 @@ protected:
             route.push_back(new State<T>(*tail));
             tail = tail->getFather();
         }
+        route.push_back(new State<T>(*tail));
         return (Solution) route;
     }
 

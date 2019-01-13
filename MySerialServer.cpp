@@ -16,7 +16,10 @@ static void *threadLoop(int sockfd, ClientHandler *client, bool* isRunning) {
         }
         int newsockfd = accept(sockfd, (struct sockaddr *) &clie, &addrlen);
         if (newsockfd < 0) {
-            if (errno != EWOULDBLOCK) {
+            if (errno == EWOULDBLOCK) {
+                perror("timeout");
+                exit(EXIT_FAILURE);
+            } else{
                 perror("other error");
                 exit(EXIT_FAILURE);
             }

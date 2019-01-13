@@ -30,7 +30,7 @@ public:
         return s.getState() == (this->state);
     }
 
-    double getCost() const { return this->cost; }
+    int getCost() const { return this->cost; }
 
     State<T> *getFather() { return this->cameFrom; }
 
