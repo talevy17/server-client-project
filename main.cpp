@@ -12,5 +12,8 @@ int main() {
                    "2,2 \n";
     Interpreter i;
     Matrix m = i.stringToMatrix(input);
+    State<Node>* f = m.getInitialState();
+    vector<State<Node>*> vf = m.getAllPossibleStates(f);
     cout << "done" << endl;
+
 }

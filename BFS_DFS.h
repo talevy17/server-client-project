@@ -23,6 +23,8 @@ public:
             if (curr == searchable.getGoalState()){
                 return trackBack(curr, searchable.getInitialState());
             }
+            stateVec adj = searchable.getAllPossibleStates(curr);
+
         }
     }
 
