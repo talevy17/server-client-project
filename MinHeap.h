@@ -131,7 +131,7 @@ public:
      */
     void replace(T element, int index) {
         //the index is invalid.
-        if (index >= this->elements.size()) {
+        if (index >= this->elements.size() || index < 0) {
             return;
         }
         //swap the index'th element.
