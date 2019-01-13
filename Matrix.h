@@ -41,20 +41,20 @@ public:
      * returns the initial state, in this case, the [0][0] node.
      * @return initial state.
      */
-    virtual State<Node> getInitialState();
+    virtual State<Node>* getInitialState();
 
     /**
     * goal state getter, in this case - the [n-1][m-1] node.
     * @return goal state.
     */
-    virtual State<Node> getGoalState();
+    virtual State<Node>* getGoalState();
 
     /**
     * creates a vector of all the possible states from the current state.
     * @param state State<Node>
     * @return vector<State<Node>> result.
     */
-    virtual std::vector<State<Node>> getAllPossibleStates(State<Node>* state);
+    virtual std::vector<State<Node>*> getAllPossibleStates(State<Node>* state);
 
     /**
     * convert a matrix to string, for mapping usage.

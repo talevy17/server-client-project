@@ -9,13 +9,22 @@
 #include <string>
 #include "Node.h"
 
-template <class Solution, class T>
+/**
+ * a Wrapper class for the searcher algorithms.
+ * @tparam Solution
+ * @tparam T
+ */
+template<class Solution, class T>
 class SearcherWrapper : public Searcher<Solution, T> {
 protected:
     PriorityQueue<State<T>> *openList;
     int evaluatedNodes;
 
-    State<Node> popOpenList(){
+    /**
+     * pop an element from the list and add 1 to the evaluated nodes.
+     * @return the popped element.
+     */
+    State<Node> popOpenList() {
         if (!this->openList->isEmpty()) {
             this->evaluatedNodes++;
             return this->openList->pop();
@@ -23,16 +32,36 @@ protected:
         return State<Node>(Node(-1, -1), -1, nullptr);
     }
 
-    Solution trackBack(State<T> head) {
-        
+    /**
+     * track back the solution route for later evaluation.
+     * @param tail
+     * @param initState
+     * @return (Solution) vector<State<T>*> route.
+     */
+    Solution trackBack(State<T> *tail, State<T> *initState) {
+        std::vector<State<T> *> route;
+        while (!(*tail == *initState)) {
+            route.push_back(tail);
+            tail = tail->getFather();
+        }
+        return (Solution) route;
     }
+
 public:
+    /**
+     * CTOR
+     * @param pq
+     */
     SearcherWrapper(PriorityQueue<State<Node>> *pq) {
         this->openList = pq;
         this->evaluatedNodes = 0;
     }
 
-    int getNumberOfNodesEvaluated(){return this->evaluatedNodes;}
+    /**
+     * number of nodes evaluated getter.
+     * @return
+     */
+    int getNumberOfNodesEvaluated() { return this->evaluatedNodes; }
 
 };
 

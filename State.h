@@ -17,8 +17,8 @@ public:
         this->cameFrom = father;
     }
 
-    bool equals(State<T> s) {
-        return s.getState().equals(this->state);
+    bool operator==(State<T>& s) {
+        return s.getState() == (this->state);
     }
 
     double getCost() const { return this->cost; }
@@ -27,19 +27,19 @@ public:
 
     T getState() const { return state; }
 
-    bool operator<(State<T> other) {
+    bool operator<(State<T>& other) {
         return ((this->cost) < other.getCost());
     }
 
-    bool operator>(State<T> other) {
+    bool operator>(State<T>& other) {
         return ((this->cost) > other.getCost());
     }
 
-    bool operator<=(State<T> other) {
+    bool operator<=(State<T>& other) {
         return ((this->cost) <= other.getCost());
     }
 
-    bool operator>=(State<T> other) {
+    bool operator>=(State<T>& other) {
         return ((this->cost) >= other.getCost());
     }
 };

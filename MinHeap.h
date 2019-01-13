@@ -117,7 +117,7 @@ public:
     int find(T element) {
         size_t size = this->elements.size();
         for (unsigned long i = 0; i < size; ++i) {
-            if (this->elements.at(i).equals(element)) {
+            if (this->elements.at(i) == (element)) {
                 return i;
             }
         }

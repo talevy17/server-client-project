@@ -65,7 +65,7 @@ public:
     * @param other
     * @return
     */
-    bool equals(Node other);
+    bool operator== (Node& other);
 };
 
 
