@@ -3,12 +3,14 @@
 #define TO_CHAR 48
 
 /**
-* CTOR
-* @param rows
-* @param cols
-* @param maze
-*/
-Matrix::Matrix(int rows, int cols, int **maze) {
+ * CTOR
+ * @param rows
+ * @param cols
+ * @param maze
+ * @param beg
+ * @param end
+ */
+Matrix::Matrix(int rows, int cols, int **maze, Node beg, Node end) {
     this->n = rows;
     this->m = cols, this->matrix = maze;
 }
@@ -30,7 +32,7 @@ int Matrix::operator[](Node node) {
 * @return initial state.
 */
 State<Node>* Matrix::getInitialState() {
-    Node node(0, 0);
+    Node node = this->initialState;
     return new State<Node>(node, (*this)[node], nullptr);
 }
 
@@ -39,7 +41,7 @@ State<Node>* Matrix::getInitialState() {
  * @return goal state.
  */
 State<Node>* Matrix::getGoalState() {
-    Node node(this->n - 1, this->m - 1);
+    Node node = this->goalState;
     return new State<Node>(node, (*this)[node], nullptr);
 }
 

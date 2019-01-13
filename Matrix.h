@@ -14,6 +14,8 @@ class Matrix : public Searchable<Node> {
     int n;
     int m;
     int **matrix;
+    Node initialState;
+    Node goalState;
 
     /**
      * check if the node is within the bounds and the value isn't a wall.
@@ -28,7 +30,7 @@ public:
      * @param cols
      * @param maze
      */
-    Matrix(int rows, int cols, int **maze);
+    Matrix(int rows, int cols, int **maze, Node beg, Node end);
 
     /**
     * overloaded [] operator, get the [][] node.
