@@ -5,11 +5,12 @@
 #include "Matrix.h"
 
 using namespace std;
+typedef vector<string> strvec;
 
-class Parser {
+class Interpreter {
 public:
-    //main function, from matrix to sring
-    Matrix stringToMatrix (string matrix, string init, string goal);
+    Matrix stringToMatrix(string input);
+    Matrix parser(strvec rowVec, string init, string goal);
 };
 
 
