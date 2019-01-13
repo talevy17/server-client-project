@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include "Matrix.h"
 #include "MinHeap.h"
@@ -14,13 +13,13 @@ int main() {
 
     int n = 2;
     int m = 5;
-    int** arr = new int*[n];
+    int **arr = new int *[n];
     for (int i = 0; i < n; i++) {
         arr[i] = new int[m];
     }
     int k = 0;
     for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j ++) {
+        for (int j = 0; j < m; j++) {
             arr[i][j] = k;
             k++;
         }
@@ -39,8 +38,6 @@ int main() {
     State<Node> init2 = mat.getInitialState();
     State<Node> goal = mat.getGoalState();
     vector<State<Node>> states = mat.getAllPossibleStates(&init);
-
-
     MinHeap<State<Node>> heap;
     for (State<Node> state : states) {
         heap.push(state);
@@ -63,20 +60,4 @@ int main() {
         }
     }*/
 
-    string result;
-    for (int row = 0; row < n; row++) {
-        for (int col = 0; col < m; col++) {
-            result.push_back(arr[row][col] + TO_CHAR);
-        }
-        result.push_back(';');
-    }
-    BestFirstSearch<vector<State<Node>*>, Node> bfs(new MinHeap<State<Node>*>);
-    Matrix mat(n, m, arr);
-    vector<State<Node>*> res = bfs.search(&mat);
-    for (State<Node>* state: res) {
-        cout << state->getCost() << endl;
-    }
-    int nodes = bfs.getNumberOfNodesEvaluated();
-    cout << nodes << endl;
 }
-
