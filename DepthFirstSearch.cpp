@@ -1,9 +1,11 @@
 #include "DepthFirstSearch.h"
-//
-//string DepthFirstSearch :: search(Searchable<Matrix> searchable){
-//
-//}
-//
-//int DepthFirstSearch :: getNumberOfNodesEvaluated(){
-//
-//}
+
+DepthFirstSearch :: DepthFirstSearch(int i, int j) : visitMatrix(i, j){}
+
+string DepthFirstSearch :: search(Matrix matrix){
+
+}
+
+int DepthFirstSearch :: getNumberOfNodesEvaluated(){
+    return this->evaluatedNodes;
+}

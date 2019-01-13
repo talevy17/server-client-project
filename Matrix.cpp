@@ -49,6 +49,7 @@ std::string Matrix::to_string() {
     for (int row = 0; row < this->n; row++) {
         for (int col = 0; col < this->m; col++) {
             result.push_back(this->matrix[row][col] + TO_CHAR);
+            result.push_back(',');
         }
         result.push_back(';');
     }
