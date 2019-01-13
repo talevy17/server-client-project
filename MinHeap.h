@@ -12,7 +12,7 @@
  * @tparam T
  */
 template<class T>
-class MinHeap : PriorityQueue<T> {
+class MinHeap : public PriorityQueue<T> {
     std::vector<T> elements;
 
     /**

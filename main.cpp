@@ -2,6 +2,8 @@
 #include <iostream>
 #include "Matrix.h"
 #include "MinHeap.h"
+#include "SearcherWrapper.h"
+#include "BestFirstSearch.h"
 
 #include <map>
 #define TO_CHAR 48
@@ -68,5 +70,6 @@ int main() {
         }
         result.push_back(';');
     }
+    SearcherWrapper<std::string, Node>* sw = new BestFirstSearch<std::string, Node>(new MinHeap<State<Node>>);
 }
 
