@@ -1,5 +1,6 @@
 #include <sstream>
 #include <vector>
+#include <iostream>
 #include "Interpreter.h"
 
 
@@ -25,7 +26,7 @@ void splitLine(const string &line, strvec &vec, char delim) {
  * @return string point
  */
 string getLast(strvec &input) {
-    string last = input.at(input.size()-1);
+    string last = input.at(input.size() - 1);
     input.pop_back();
     return last;
 }
@@ -37,7 +38,7 @@ string getLast(strvec &input) {
  * @param rowVec
  * @param colVec
  */
-void splitMat(strvec &rowVec , strvec &colVec) {
+void splitMat(strvec &rowVec, strvec &colVec) {
     strvec::iterator it;
     for (it = rowVec.begin(); it < rowVec.end(); ++it) {
         splitLine(*it, colVec, ',');
@@ -52,13 +53,13 @@ void splitMat(strvec &rowVec , strvec &colVec) {
  * @param col
  * @return array of int**
  */
-int **createMatrix(strvec rowVec, int row, int &col) {
+int** createMatrix(strvec rowVec, int row, int &col) {
     strvec colVec;
-    splitMat(rowVec,colVec);
+    splitMat(rowVec, colVec);
     col = ((int) colVec.size()) / row;
     //create array matrix
     int **mat = new int *[row];
-    for (int i = 0; i < row ; i++) {
+    for (int i = 0; i < row; i++) {
         mat[i] = new int[col];
     }
     //fill the matrix.
@@ -69,6 +70,7 @@ int **createMatrix(strvec rowVec, int row, int &col) {
             t++;
         }
     }
+    return mat;
 }
 
 /**
@@ -81,8 +83,8 @@ Node fromPointToNode(string point) {
     strvec pointVec;
     splitLine(point, pointVec, ',');
     int beg = stoi(pointVec.at(0));
-    int end = stoi(pointVec.at(pointVec.size()-1));
-    return Node(beg,end);
+    int end = stoi(pointVec.at(pointVec.size() - 1));
+    return Node(beg, end);
 }
 
 /**
@@ -96,7 +98,8 @@ Node fromPointToNode(string point) {
 Matrix Interpreter::parser(strvec rowVec, string init, string goal) {
     int col = 0;
     int row = rowVec.size();
-    int **mat = createMatrix(rowVec, row, col);
+    int **mat;
+    mat = createMatrix(rowVec, row, col);
     return Matrix(row, col, mat,
                   fromPointToNode(init), fromPointToNode(goal));
 }
