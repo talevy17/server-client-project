@@ -2,7 +2,7 @@
 #include "Matrix.h"
 #include "MinHeap.h"
 #include "SearcherWrapper.h"
-#include "BestFirstSearch.h"
+#include "BestFS_Astar.h"
 
 #include <map>
 #define TO_CHAR 48

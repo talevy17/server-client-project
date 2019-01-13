@@ -11,14 +11,15 @@
 #include <string>
 #include <bits/stdc++.h>
 
-template<class Solution, class T>
-class BestFirstSearch : public SearcherWrapper<Solution, T> {
+template<class Solution, class T, class Heuristic>
+class BestFS_Astar : public SearcherWrapper<Solution, T> {
+    Heuristic h;
 public:
     /**
      * CTOR, initializes super class.
      * @param pq
      */
-    BestFirstSearch(PriorityQueue<State<T> *> *pq) : SearcherWrapper<Solution, T>(pq) {}
+    BestFS_Astar(PriorityQueue<State<T> *> *pq, Heuristic heu) : SearcherWrapper<Solution, T>(pq) {this->h = heu;}
 
     /**
      * searches the cheapest path in the given graph.
@@ -50,6 +51,7 @@ public:
                 int nodeIndex = this->openList->find(state);
                 typedef typename std::vector<State<T> *>::iterator InputIterator;
                 InputIterator closedIter = this->findByVal(closed.begin(), closed.end(), state);
+                state->addCost(this->h(state->getState(), goal->getState()));
                 //if the node was never visited at all.
                 if (closedIter == closed.end() && nodeIndex == -1) {
                     this->openList->push(new State<T>(*state));

@@ -5,10 +5,10 @@
 template<class T>
 class State {
     T state;
-    double cost;
+    int cost;
     State<T> *cameFrom;
 public:
-    State(T state, double cost, State<T> *father) {
+    State(T state, int cost, State<T> *father) {
         this->state = state;
         this->cost = cost;
         this->cameFrom = father;
@@ -50,6 +50,10 @@ public:
 
     bool operator>=(const State<T>& other) {
         return ((this->cost) >= other.getCost());
+    }
+
+    void addCost(int toBeAdded) {
+        this->cost += toBeAdded;
     }
 };
 
