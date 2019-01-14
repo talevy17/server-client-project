@@ -103,5 +103,5 @@ int Matrix::getAverageWeight() {
             weight += this->matrix[i][j];
         }
     }
-    return weight/(this->n+this->m);
+    return weight/(this->n*this->m);
 }

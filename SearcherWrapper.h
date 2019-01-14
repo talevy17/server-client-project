@@ -88,7 +88,7 @@ public:
      */
     int getNumberOfNodesEvaluated() { return this->evaluatedNodes; }
 
-    ~SearcherWrapper() {delete(this->openList);}
+    virtual ~SearcherWrapper() {delete(this->openList);}
 
 };
 
