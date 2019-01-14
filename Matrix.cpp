@@ -35,7 +35,7 @@ int Matrix::operator[](Node node) {
 * @return initial state.
 */
 State<Node> *Matrix::getInitialState() {
-    return new State<Node>(this->initialState, (*this)[this->initialState], nullptr);
+    return new CoreState<Node>(this->initialState, (*this)[this->initialState], nullptr);
 }
 
 /**
@@ -43,7 +43,7 @@ State<Node> *Matrix::getInitialState() {
  * @return goal state.
  */
 State<Node> *Matrix::getGoalState() {
-    return new State<Node>(this->goalState, (*this)[this->goalState], nullptr);
+    return new CoreState<Node>(this->goalState, (*this)[this->goalState], nullptr);
 }
 
 /**
@@ -69,7 +69,7 @@ std::vector<State<Node> *> Matrix::getAllPossibleStates(State<Node> *state) {
     std::vector<Node> steps = {curr.goDown(), curr.goLeft(), curr.goRight(), curr.goUp()};
     for (Node step : steps) {
         if (validStep(step)) {
-            result.push_back(new State<Node>(step, (*this)[step] + state->getCost(), state));
+            result.push_back(new CoreState<Node>(step, (*this)[step] + state->getCost(), state));
         }
     }
     return result;
