@@ -5,54 +5,64 @@
 #include "SearcherWrapper.h"
 
 using namespace std;
-template <class Solution , class T>
-class BFS_DFS : public SearcherWrapper<Solution,T> {
-    vector<T> visit;
+
+template<class Solution, class T>
+class BFS_DFS : public SearcherWrapper<Solution, T> {
+    vector<State<T> *> visit;
 public:
+    typedef vector<State<T> *> stateVec;
 
-    typedef vector<CoreState<T>> stateVec;
-    typedef typename stateVec :: iterator statesIter;
-    typedef typename vector<T> :: iterator vecIter;
+    /**
+     * constructor
+     * @param priority queue
+     */
+    BFS_DFS(PriorityQueue<State<T> *> *pq) : SearcherWrapper<Solution, T>(pq) {}
 
-    BFS_DFS(PriorityQueue<CoreState<Node>*> *pq) : SearcherWrapper<Solution,T>(pq){}
-
-    virtual Solution search(Searchable<T> searchable){
-        CoreState<T> curr = searchable.getInitialState();
+    /**
+     * the function does BFS or DFS (same algorithem different priority queue)
+     * and return the track
+     * @param searchable
+     * @return solution
+     */
+    virtual Solution search(Searchable<T> *searchable) {
+        State<T> *curr = searchable->getInitialState();
         this->openList->push(curr);
-        while (!this->openList->isEmpty()){
-            if (curr == searchable.getGoalState()){
-                return trackBack(curr, searchable.getInitialState());
+        // dfs/bfs
+        while (!this->openList->isEmpty()) {
+            curr = this->popOpenList();
+            //if we got to the goal state - stop and return trackBack
+            if (*curr == *searchable->getGoalState()) {
+                return this->trackBack(curr, searchable->getInitialState());
             }
-            stateVec adj = searchable.getAllPossibleStates(curr);
-
+            //if its the first time visiting - mark as visited.
+            if (!visited(curr)) {
+                visit.push_back(curr);
+            }
+            //get neighbors and push it to the list.
+            stateVec adjs = searchable->getAllPossibleStates(curr);
+            for (auto adj : adjs) {
+                if (!visited(adj)) {
+                    this->openList->push(adj);
+                }
+            }
         }
     }
 
-    void bfsDfs(Searchable<T> searchable, CoreState<T> curr){
-        stateVec adj = searchable.getAllPossibleStates(curr);
-        statesIter adjIter;
-        vecIter notFound = this->visit.end();
-        for (adjIter = adj.begin(); adjIter < adj.end() ; ++adjIter){
-            //if not visited - visit.
-            if (this->visit.find(curr) != notFound) {
-                this->visit.push_back(*adjIter);
-                this->openList->push(*adjIter);
-                bfsDfs(searchable.getAllPossibleStates(*adjIter));
+    /**
+     * iterator on the visit vector in order to find
+     * if the state in this vector
+     * @param state
+     * @return true if found, false - else
+     */
+    bool visited(State<T> *state) {
+        typename stateVec::iterator it;
+        for (it = visit.begin(); it < visit.end(); ++it) {
+            if (**it == *state) {
+                return true;
             }
         }
+        return false;
     }
 };
-
-/**
-def dfs(graph, start, visited=None):
-    if visited is None:
-        visited = set()
-    visited.add(start)
-    for next in graph[start] - visited:
-        dfs(graph, next, visited)
-    return visited
-}
- */
-
 
 #endif //SERVER_CLIENT_PROJECT_DEPTHFIRSTSEARCH_H
