@@ -45,10 +45,39 @@ protected:
     Solution trackBack(State<T> *tail, State<T> *initState) {
         std::vector<State<T> *> route;
         while (!(*tail == *initState)) {
-            route.push_back(tail);
+            route.push_back(new State<T>(*tail));
             tail = tail->getFather();
         }
+        route.push_back(new State<T>(*tail));
         return (Solution) route;
+    }
+
+    /**
+     * frees all of the allocated states.
+     * @param allocTracker
+     */
+    void freeAllocTracker(std::vector<State<T> *> &allocTracker) {
+        for (State<T> *vertex : allocTracker) {
+            delete (vertex);
+        }
+    }
+
+    typedef typename std::vector<State<T> *>::iterator InputIterator;
+
+    /**
+     * finds a value in a vector of pointers,
+     * implemented the same as std::find but compares the values of the pointers.
+     * @param first begin iterator.
+     * @param last end iterator
+     * @param val State<T>* value.
+     * @return InputIterator.
+     */
+    InputIterator findByVal(InputIterator first, InputIterator last, State<T>* val) {
+        while (first != last) {
+            if (**first == *val) return first;
+            ++first;
+        }
+        return last;
     }
 
 public:
@@ -58,6 +87,8 @@ public:
      * @return
      */
     int getNumberOfNodesEvaluated() { return this->evaluatedNodes; }
+
+    ~SearcherWrapper() {delete(this->openList);}
 
 };
 
