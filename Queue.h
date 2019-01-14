@@ -25,7 +25,7 @@ public:
 
     virtual void replace(T element, int index) { return; }
 
-    virtual T getElement(int i) { return; }
+    virtual T getElement(int i) { return this->elements.front(); }
 
     virtual bool isEmpty() { return this->elements.empty(); }
 };
