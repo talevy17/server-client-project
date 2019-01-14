@@ -63,6 +63,11 @@ public:
     * @return string result.
     */
     virtual std::string to_string();
+
+    /**
+     * @return average weight
+     */
+    int getAverageWeight();
 };
 
 

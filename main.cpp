@@ -9,6 +9,7 @@ using namespace std;
 
 
 int main() {
+    /*
     string input = "1,80,3,-1,4 \n"
                    "4,2,-1,1,1 \n"
                    "10,8,9,2,1 \n"
@@ -37,4 +38,7 @@ int main() {
         delete(state);
     }
     cout << "evaluated Nodes: "<<bfs.getNumberOfNodesEvaluated()<<endl;
+     */
+    string g;
+    cout << g <<endl;
 }

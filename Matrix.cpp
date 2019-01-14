@@ -90,3 +90,18 @@ std::string Matrix::to_string() {
     }
     return result;
 }
+
+/**
+ * the function sum the weights of every node and return
+ * the average.
+ * @return average weight
+ */
+int Matrix::getAverageWeight() {
+    int weight = 0;
+    for (int i = 0; i < this->n; i++) {
+        for (int j = 0; j < this->m; j++) {
+            weight += this->matrix[i][j];
+        }
+    }
+    return weight/(this->n+this->m);
+}

@@ -22,11 +22,8 @@ MyTestClientHandler::MyTestClientHandler(CacheManager<string, string> *cacheMana
  */
 void MyTestClientHandler::handleClient(int sockfd) {
     this->sockfd = sockfd;
-    string problem = readLine();
-    if (problem == "end"){
-        this->stop = true;
-        return;
-    }
+    string problem;
+    getInput(problem);
     string solution;
     //gets the solution
     if (this->manager->isThereASolution(problem)) {
@@ -41,17 +38,20 @@ void MyTestClientHandler::handleClient(int sockfd) {
  * the function read line by gets input from the server
  * @return string - problem
  */
-string MyTestClientHandler::readLine() {
+void MyTestClientHandler::getInput(string &problem) {
     ssize_t valread;
     char buffer[BUF] = {0};
     listen(this->sockfd, 5);
-    //valread = read(this->sockfd, buffer, sizeof(buffer));
-    valread = read(sockfd,buffer,BUF);
-    if (valread < 0) {
-        perror("Error reading from socket");
+    //while the user didn't send "end"
+    while (true) {
+        valread = read(sockfd, buffer, BUF);
+        if (valread < 0) {
+            perror("Error reading from socket");
+        }
+        std::string line(buffer, BUF);
+        if (line == ("end")) { return; }
+        problem.append(buffer);
     }
-    std::string myString(buffer, BUF);
-    return buffer;
 }
 
 /**

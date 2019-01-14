@@ -17,7 +17,7 @@ public:
     MyTestClientHandler(CacheManager<string, string>* cacheManager,
             Solver<string,string>* solver);
     virtual void handleClient(int sockfd);
-    string readLine();
+    void getInput(string &str);
     bool shouldStop();
 };
 
