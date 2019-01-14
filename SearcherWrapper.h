@@ -33,7 +33,7 @@ protected:
             this->evaluatedNodes++;
             return this->openList->pop();
         }
-        return new State<Node>(Node(-1, -1), -1, nullptr);
+        return new CoreState<Node>(Node(-1, -1), -1, nullptr);
     }
 
     /**
@@ -42,13 +42,13 @@ protected:
      * @param initState
      * @return (Solution) vector<State<T>*> route.
      */
-    Solution trackBack(State<T> *tail, State<T> *initState) {
+    virtual Solution trackBack(State<T> *tail, State<T> *initState) {
         std::vector<State<T> *> route;
         while (!(*tail == *initState)) {
-            route.push_back(new State<T>(*tail));
+            route.push_back(new CoreState<T>(tail));
             tail = tail->getFather();
         }
-        route.push_back(new State<T>(*tail));
+        route.push_back(new CoreState<T>(tail));
         return (Solution) route;
     }
 

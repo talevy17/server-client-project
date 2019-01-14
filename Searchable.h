@@ -5,7 +5,7 @@
 #ifndef SERVER_CLIENT_PROJECT_SEARCHABLE_H
 #define SERVER_CLIENT_PROJECT_SEARCHABLE_H
 
-#include "State.h"
+#include "CoreState.h"
 #include <vector>
 #include <string>
 

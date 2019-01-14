@@ -2,60 +2,66 @@
 #ifndef SERVER_CLIENT_PROJECT_STATE_H
 #define SERVER_CLIENT_PROJECT_STATE_H
 
+/**
+ * the State interface, designed for the searchers as a decorator class.
+ * @tparam T
+ */
 template<class T>
 class State {
-    T state;
-    int cost;
-    State<T> *cameFrom;
 public:
-    State(T state, int cost, State<T> *father) {
-        this->state = state;
-        this->cost = cost;
-        this->cameFrom = father;
-    }
+    /**
+     * state getter.
+     * @return T state.
+     */
+    virtual T getState() const = 0;
 
-    State(const State &other) {
-        this->state = other.getState();
-        this->cost = other.getCost();
-        this->cameFrom = other.cameFrom;
-    }
+    /**
+     * cost getter
+     * @return int cost
+     */
+    virtual int getCost() const = 0;
 
-    State &operator=(const State &other) {
-        this->state = other.getState();
-        this->cost = other.getCost();
-        this->cameFrom = other.cameFrom;
-    }
+    /**
+     * father getter, returns the previous state.
+     * @return State<T>* father.
+     */
+    virtual State<T> *getFather() = 0;
 
-    bool operator==(const State<T>& s) {
-        return s.getState() == (this->state);
-    }
+    /**
+     * overload the == operator
+     * @return bool res
+     */
+    virtual bool operator==(State<T> &) = 0;
 
-    int getCost() const { return this->cost; }
+    /**
+     * overload the <= operator
+     * @return bool res
+     */
+    virtual bool operator<=(State<T> &) = 0;
 
-    State<T> *getFather() { return this->cameFrom; }
+    /**
+     * overload the >= operator
+     * @return bool res
+     */
+    virtual bool operator>=(State<T> &) = 0;
 
-    T getState() const { return state; }
+    /**
+     * overload the < operator
+     * @return bool res
+     */
+    virtual bool operator<(State<T> &) = 0;
 
-    bool operator<(const State<T>& other) {
-        return ((this->cost) < other.getCost());
-    }
+    /**
+     * overload the > operator
+     * @return bool res
+     */
+    virtual bool operator>(State<T> &) = 0;
 
-    bool operator>(const State<T>& other) {
-        return ((this->cost) > other.getCost());
-    }
+    /**
+     * virtual DTOR.
+     */
+    virtual ~State() {}
 
-    bool operator<=(const State<T>& other) {
-        return ((this->cost) <= other.getCost());
-    }
-
-    bool operator>=(const State<T>& other) {
-        return ((this->cost) >= other.getCost());
-    }
-
-    void addCost(int toBeAdded) {
-        this->cost += toBeAdded;
-    }
 };
-
 
 #endif //SERVER_CLIENT_PROJECT_STATE_H

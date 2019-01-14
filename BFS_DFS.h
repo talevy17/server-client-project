@@ -10,14 +10,14 @@ class BFS_DFS : public SearcherWrapper<Solution,T> {
     vector<T> visit;
 public:
 
-    typedef vector<State<T>> stateVec;
+    typedef vector<CoreState<T>> stateVec;
     typedef typename stateVec :: iterator statesIter;
     typedef typename vector<T> :: iterator vecIter;
 
-    BFS_DFS(PriorityQueue<State<Node>*> *pq) : SearcherWrapper<Solution,T>(pq){}
+    BFS_DFS(PriorityQueue<CoreState<Node>*> *pq) : SearcherWrapper<Solution,T>(pq){}
 
     virtual Solution search(Searchable<T> searchable){
-        State<T> curr = searchable.getInitialState();
+        CoreState<T> curr = searchable.getInitialState();
         this->openList->push(curr);
         while (!this->openList->isEmpty()){
             if (curr == searchable.getGoalState()){
@@ -28,7 +28,7 @@ public:
         }
     }
 
-    void bfsDfs(Searchable<T> searchable, State<T> curr){
+    void bfsDfs(Searchable<T> searchable, CoreState<T> curr){
         stateVec adj = searchable.getAllPossibleStates(curr);
         statesIter adjIter;
         vecIter notFound = this->visit.end();

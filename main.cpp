@@ -26,6 +26,7 @@ int main() {
     for (State<Node>* state: astarRes) {
         cout <<"cost: "<<state->getCost()<<endl;
         cout<< "index: ("<<state->getState().getRow() << ", " << state->getState().getCol()<<")"<<endl;
+        delete(state);
     }
     cout << "evaluated Nodes: "<<astar.getNumberOfNodesEvaluated()<<endl;
     cout <<"**********************"<<endl;
@@ -33,6 +34,7 @@ int main() {
     for (State<Node>* state: bfsRes) {
         cout <<"cost: "<<state->getCost()<<endl;
         cout<< "index: ("<<state->getState().getRow() << ", " << state->getState().getCol()<<")"<<endl;
+        delete(state);
     }
     cout << "evaluated Nodes: "<<bfs.getNumberOfNodesEvaluated()<<endl;
 }
