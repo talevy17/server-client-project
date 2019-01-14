@@ -12,6 +12,15 @@ struct AstarApproxHeuristic {
     }
 };
 
+struct ManhattenAverageWeight {
+    int avgWeight;
+    ManhattenAverageWeight(int w) {this->avgWeight = w;}
+    int operator()(Node& current, Node& goalState) {
+        return abs(current.getRow() - goalState.getRow())*avgWeight
+        + abs(current.getCol() - goalState.getCol())*avgWeight;
+    }
+};
+
 struct BestFsHeuristic {
     int operator()(Node& current, Node& goalState) {
         return 0;

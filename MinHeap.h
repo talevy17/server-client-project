@@ -57,9 +57,9 @@ class MinHeap : public PriorityQueue<T> {
         int r = rightChild(i);
         //compare the two children with the parent.
         int smallest = i;
-        if (l < this->elements.size() && this->elements.at(l) < this->elements.at(i))
+        if (l < this->elements.size() && this->elements.at(l) <= this->elements.at(i))
             smallest = l;
-        if (r < this->elements.size() && this->elements.at(r) < this->elements.at(smallest))
+        if (r < this->elements.size() && this->elements.at(r) <= this->elements.at(smallest))
             smallest = r;
         //if a smaller node was found below, swap the parent with the child and call heapify again.
         if (smallest != i)
@@ -90,7 +90,7 @@ public:
     void push(T element) {
         this->elements.push_back(element);
         int i = this->elements.size() - 1;
-        while (i != 0 && *(this->elements.at(parent(i))) > *(this->elements.at(i))) {
+        while (i != 0 && *(this->elements.at(parent(i))) >= *(this->elements.at(i))) {
             swap(i, parent(i));
             i = parent(i);
         }
@@ -138,7 +138,7 @@ public:
         this->elements.at(index) = element;
         int i = index;
         //while the replaced element is smaller than his parent, swap them.
-        while (i != 0 && *(this->elements.at(parent(i))) > *(this->elements.at(i)))
+        while (i != 0 && *(this->elements.at(parent(i))) >= *(this->elements.at(i)))
         {
             swap(i, parent(i));
             i = parent(i);

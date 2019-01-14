@@ -14,8 +14,9 @@ int main() {
                    "4,2,-1,1,1 \n"
                    "10,8,9,2,1 \n"
                    "2,-1,1,6,7 \n"
+                   "80,1,3,1,10\n"
                    "0,0 \n"
-                   "3,4 \n";
+                   "4,4 \n";
     Interpreter i;
     Matrix m = i.stringToMatrix(input);
     BestFS_Astar<vector<State<Node>*>, Node,AstarApproxHeuristic>
