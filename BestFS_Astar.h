@@ -20,14 +20,14 @@
  */
 template<class Solution, class T, class Heuristic>
 class BestFS_Astar : public SearcherWrapper<Solution, T> {
-    Heuristic h;
+    Heuristic* h;
 
 public:
     /**
      * CTOR, initializes super class.
      * @param pq
      */
-    BestFS_Astar(PriorityQueue<State<T> *> *pq, Heuristic heu) : SearcherWrapper<Solution, T>(pq) { this->h = heu; }
+    BestFS_Astar(PriorityQueue<State<T> *> *pq, Heuristic* heu) : SearcherWrapper<Solution, T>(pq) { this->h = heu; }
 
     /**
      * searches the cheapest path in the given graph.
@@ -62,7 +62,7 @@ public:
                 InputIterator closedIter = this->findByVal(closed.begin(), closed.end(), state);
                 T curr = state->getState();
                 T goalState = goal->getState();
-                state->setCost(this->h(curr, goalState));
+                state->setCost((*(this->h))(curr, goalState));
                 //if the node was never visited at all.
                 if (closedIter == closed.end() && nodeIndex == -1) {
                     this->openList->push(new HeuristicState<T>(*state));
@@ -92,6 +92,10 @@ public:
         this->freeAllocTracker(closed);
         std::vector<State<T> *> vec;
         return (Solution) vec;
+    }
+
+    virtual ~BestFS_Astar() {
+        delete (this->h);
     }
 };
 
