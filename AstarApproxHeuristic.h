@@ -11,7 +11,7 @@ struct AstarApproxHeuristic {
         return abs(current.getRow() - goalState.getRow()) + abs(current.getCol() - goalState.getCol());
     }
 };
- class ManhattenAverageWeight {
+ struct ManhattenAverageWeight {
     int avgWeight;
  public:
     ManhattenAverageWeight(int w) {this->avgWeight = w;}
