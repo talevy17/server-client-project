@@ -7,22 +7,24 @@
 #include "Node.h"
 
 struct AstarApproxHeuristic {
-    int operator()(Node& current, Node& goalState) {
+    int operator()(Node &current, Node &goalState) {
         return abs(current.getRow() - goalState.getRow()) + abs(current.getCol() - goalState.getCol());
     }
 };
- struct ManhattenAverageWeight {
+
+struct ManhattenAverageWeight {
     int avgWeight;
- public:
-    ManhattenAverageWeight(int w) {this->avgWeight = w;}
-    int operator()(Node& current, Node& goalState) {
-        return abs(current.getRow() - goalState.getRow())*avgWeight
-        + abs(current.getCol() - goalState.getCol())*avgWeight;
+public:
+    ManhattenAverageWeight(int w) { this->avgWeight = w; }
+
+    int operator()(Node &current, Node &goalState) {
+        return abs(current.getRow() - goalState.getRow()) * avgWeight
+               + abs(current.getCol() - goalState.getCol()) * avgWeight;
     }
 };
 
 struct BestFsHeuristic {
-    int operator()(Node& current, Node& goalState) {
+    int operator()(Node &current, Node &goalState) {
         return 0;
     }
 };

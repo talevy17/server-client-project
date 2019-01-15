@@ -111,3 +111,9 @@ Node &Node::operator=(const Node &other) {
     this->row = other.getRow();
     return *this;
 }
+
+bool Node::operator<(const Node &other) {
+    if (this->row != other.getRow())
+        return (this->row < other.getRow());
+    return (this->col < other.getCol());
+}
