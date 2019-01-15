@@ -16,6 +16,13 @@ Matrix::Matrix(int rows, int cols, int **maze, Node beg, Node end) {
     this->m = cols, this->matrix = maze;
     this->initialState = beg;
     this->goalState = end;
+    for (int i = 0; i < this->n; i++) {
+        for (int j = 0; j < this->m; j++) {
+            Node node(i,j);
+            State<Node>* st = new CoreState<Node>(node, 0, nullptr);
+            this->states[st] = false;
+        }
+    }
 }
 
 /**
@@ -104,4 +111,13 @@ int Matrix::getAverageWeight() {
         }
     }
     return weight/(this->n*this->m);
+}
+
+bool Matrix::wasVisited(State<Node> *node) {
+    return this->states[node];
+}
+
+void Matrix::visit(State<Node> *node) {
+
+    this->states[node] = true;
 }

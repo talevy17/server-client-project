@@ -10,10 +10,17 @@
 /**
  * a searchable used for finding paths in a maze.
  */
+struct functor {
+    bool operator()(State<Node>* a, State<Node>* b) {
+        return *a < *b;
+    }
+};
+
 class Matrix : public Searchable<Node> {
     int n;
     int m;
     int **matrix;
+    std::map<State<Node>*, bool, functor> states;
     Node initialState;
     Node goalState;
 
@@ -24,6 +31,7 @@ class Matrix : public Searchable<Node> {
      */
     bool validStep(Node node);
 public:
+
     /**
      * CTOR
      * @param rows
@@ -68,6 +76,10 @@ public:
      * @return average weight
      */
     int getAverageWeight();
+
+    virtual bool wasVisited(State<Node>* node);
+
+    virtual void visit(State<Node>* node);
 };
 
 

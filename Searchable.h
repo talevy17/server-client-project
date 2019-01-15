@@ -8,10 +8,16 @@
 #include "CoreState.h"
 #include <vector>
 #include <string>
+#include <map>
 
 template<class T>
 class Searchable {
 public:
+
+    virtual bool wasVisited(State<T>* node) = 0;
+
+    virtual void visit(State<T>* node) = 0;
+
     virtual State<T>* getInitialState() = 0;
 
     virtual State<T>* getGoalState() = 0;

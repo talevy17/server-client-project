@@ -3,12 +3,11 @@
 
 #include <string>
 #include "SearcherWrapper.h"
+#include <map>
 
 using namespace std;
-
 template<class Solution, class T>
 class BFS_DFS : public SearcherWrapper<Solution, T> {
-    vector<State<T> *> visit;
 public:
     typedef vector<State<T> *> stateVec;
 
@@ -32,36 +31,25 @@ public:
             curr = this->popOpenList();
             //if we got to the goal state - stop and return trackBack
             if (*curr == *searchable->getGoalState()) {
-                return this->trackBack(curr, searchable->getInitialState());
+                Solution sol = this->trackBack(curr, searchable->getInitialState());
+                while (!this->openList->isEmpty()) {
+                    delete(this->openList->pop());
+                }
+                return sol;
             }
             //if its the first time visiting - mark as visited.
-            if (!visited(curr)) {
-                visit.push_back(curr);
-            }
-            //get neighbors and push it to the list.
-            stateVec adjs = searchable->getAllPossibleStates(curr);
-            for (auto adj : adjs) {
-                if (!visited(adj)) {
-                    this->openList->push(adj);
+            if (!searchable->wasVisited(curr)) {
+                searchable->visit(curr);
+                //get neighbors and push it to the list.
+                stateVec adjs = searchable->getAllPossibleStates(curr);
+                for (auto adj : adjs) {
+                    if (!searchable->wasVisited(adj)) {
+                        this->openList->push(new CoreState<T>(adj));
+                    }
+                    delete adj;
                 }
             }
         }
-    }
-
-    /**
-     * iterator on the visit vector in order to find
-     * if the state in this vector
-     * @param state
-     * @return true if found, false - else
-     */
-    bool visited(State<T> *state) {
-        typename stateVec::iterator it;
-        for (it = visit.begin(); it < visit.end(); ++it) {
-            if (**it == *state) {
-                return true;
-            }
-        }
-        return false;
     }
 };
 

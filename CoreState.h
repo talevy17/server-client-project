@@ -30,7 +30,7 @@ public:
      * CCTOR.
      * @param other
      */
-    CoreState(const CoreState &other) {
+    CoreState(CoreState &other) {
         this->state = other.getState();
         this->cost = other.getCost();
         this->cameFrom = other.cameFrom;
@@ -47,7 +47,7 @@ public:
     }
 
     bool operator==(State<T> &other) {
-        return other.getState() == (this->state);
+        return this->state == other.getState();
     }
 
     int getCost() const { return this->cost; }
@@ -57,7 +57,7 @@ public:
     T getState() const { return state; }
 
     bool operator<(State<T> &other) {
-        return ((this->cost) < other.getCost());
+        return this->state < other.getState();
     }
 
     bool operator>(State<T> &other) {

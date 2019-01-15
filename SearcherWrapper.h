@@ -57,6 +57,9 @@ protected:
      * @param allocTracker
      */
     void freeAllocTracker(std::vector<State<T> *> &allocTracker) {
+        while (!this->openList->isEmpty()) {
+            delete (this->openList->pop());
+        }
         for (State<T> *vertex : allocTracker) {
             delete (vertex);
         }
