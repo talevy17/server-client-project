@@ -91,7 +91,7 @@ public:
      */
     bool operator>=(const Node &other);
 
-    bool operator<(const Node& other);
+    bool operator<(Node& other);
 
     Node(const Node &other);
 

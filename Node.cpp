@@ -66,15 +66,6 @@ bool Node::operator==(const Node &other) {
 }
 
 /**
- * this node position is from left to the other
- * @param other node
- * @return true - if from left, false - else
- */
-bool Node::operator<(const Node &other) {
-    return (this->row==other.row)&&(this->col<other.col);
-}
-
-/**
  * this node position is from right to the other
  * @param other node
  * @return true - if from right, false - else
