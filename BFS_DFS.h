@@ -50,6 +50,8 @@ public:
                 }
             }
         }
+        std::vector<State<T> *> vec;
+        return (Solution) vec;
     }
 };
 
