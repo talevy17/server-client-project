@@ -13,7 +13,7 @@ using namespace std;
 
 
 int main() {
-    /*
+
     string input = "1,80,3,-1,4,2,3,4,5,6 \n"
                    "4,2,-1,1,1,2,3,4,5,6 \n"
                    "10,8,9,2,1,2,3,4,5,6 \n"
@@ -36,7 +36,7 @@ int main() {
                    "80,1,3,1,10,2,3,4,5,6\n"
                    "0,0 \n"
                    "18,9 \n";
-*/
+
 
     /*string input = "1,2,3 \n"
                    "4,6,7 \n"
@@ -45,18 +45,22 @@ int main() {
                    "1,2 \n";*/
 
 
-    string input = "1,80,3,-1,4 \n"
+    /*string input = "1,80,3,-1,4 \n"
                    "4,2,-1,1,1 \n"
                    "10,8,9,2,1 \n"
                    "2,-1,1,6,7 \n"
                    "80,-1,3,1,10\n"
                    "0,0 \n"
-                   "4,4 \n";
+                   "4,4 \n";*/
 
     Interpreter i;
     Matrix m = i.stringToMatrix(input);
     string s = m.to_string();
-
+/*
+    BestFS_Astar<vector<State<Node>*>, Node,AstarApproxHeuristic>
+            astar(new MinHeap<State<Node>*>, AstarApproxHeuristic());
+    BestFS_Astar<vector<State<Node>*>, Node,BestFsHeuristic> bfs(new MinHeap<State<Node>*>, BestFsHeuristic());
+    int avg = m.getAverageWeight();
     BFS_DFS<vector<State<Node>*>,Node> b (new Queue<State<Node>*>);
     vector<State<Node>*> vec = b.search(&m);
     SearchableSolver searchableSolver;
@@ -65,18 +69,14 @@ int main() {
     for (auto v : vec){
         cout << v->getState().getRow() << "," << v->getState().getCol()<< endl;
         delete (v);
-    }
+    */
     //cout << iy << endl;
 
 
-    /*
-    BestFS_Astar<vector<State<Node>*>, Node,AstarApproxHeuristic>
-            astar(new MinHeap<State<Node>*>, AstarApproxHeuristic());
-    BestFS_Astar<vector<State<Node>*>, Node,BestFsHeuristic> bfs(new MinHeap<State<Node>*>, BestFsHeuristic());
     int avg = m.getAverageWeight();
     BestFS_Astar<vector<State<Node>*>, Node,ManhattenAverageWeight>
-            astar(new MinHeap<State<Node>*>, new ManhattenAverageWeight(m.getAverageWeight()));
-    BestFS_Astar<vector<State<Node>*>, Node,BestFsHeuristic> bfs(new MinHeap<State<Node>*>, new BestFsHeuristic());
+            astar(new MinHeap<State<Node>*>, new ManhattenAverageWeight(avg));
+    BestFS_Astar<vector<State<Node>*>, Node,ManhattenAverageWeight> bfs(new MinHeap<State<Node>*>, new ManhattenAverageWeight(avg/2));
     vector<State<Node>*> astarRes = astar.search(&m);
     vector<State<Node>*> bfsRes = bfs.search(&m);
     cout <<"this is astar results:"<<endl;
@@ -94,5 +94,5 @@ int main() {
         delete(state);
     }
     cout << "evaluated Nodes: "<<bfs.getNumberOfNodesEvaluated()<<endl;
-*/
+
 }
