@@ -35,7 +35,7 @@ void MyTestClientHandler::handleClient(int sockfd) {
 }
 
 /**
- * the function read line by gets input from the server
+ * the function read lines of input from the server
  * @return string - problem
  */
 void MyTestClientHandler::getInput(string &problem) {

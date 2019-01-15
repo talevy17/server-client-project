@@ -35,33 +35,19 @@ public:
                 return this->trackBack(curr, searchable->getInitialState());
             }
             //if its the first time visiting - mark as visited.
-            if (!visited(curr)) {
+            if (this->findByVal(this->visit.begin(),this->visit.end(),curr)==
+                this->visit.end()) {
                 visit.push_back(curr);
             }
             //get neighbors and push it to the list.
             stateVec adjs = searchable->getAllPossibleStates(curr);
             for (auto adj : adjs) {
-                if (!visited(adj)) {
+                if (this->findByVal(this->visit.begin(),this->visit.end(),adj)==
+                this->visit.end()) {
                     this->openList->push(adj);
                 }
             }
         }
-    }
-
-    /**
-     * iterator on the visit vector in order to find
-     * if the state in this vector
-     * @param state
-     * @return true if found, false - else
-     */
-    bool visited(State<T> *state) {
-        typename stateVec::iterator it;
-        for (it = visit.begin(); it < visit.end(); ++it) {
-            if (**it == *state) {
-                return true;
-            }
-        }
-        return false;
     }
 };
 
