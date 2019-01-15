@@ -31,7 +31,7 @@ public:
         while (!this->openList->isEmpty()) {
             curr = this->popOpenList();
             //if we got to the goal state - stop and return trackBack
-            if (*curr == *searchable->getGoalState()) {
+                if (*curr == *searchable->getGoalState()) {
                 return this->trackBack(curr, searchable->getInitialState());
             }
             //if its the first time visiting - mark as visited.

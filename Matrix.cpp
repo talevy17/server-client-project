@@ -76,6 +76,16 @@ std::vector<State<Node> *> Matrix::getAllPossibleStates(State<Node> *state) {
 }
 
 /**
+ * function gets node and convert it to string
+ * @param node
+ * @return string representation of the node
+ */
+std::string pointToString(Node n){
+    return (std::to_string(n.getRow()) + ','
+     + std::to_string(n.getCol()) + '\n');
+}
+
+/**
  * convert a matrix to string, for mapping usage.
  * @return string result.
  */
@@ -83,11 +93,13 @@ std::string Matrix::to_string() {
     std::string result;
     for (int row = 0; row < this->n; row++) {
         for (int col = 0; col < this->m; col++) {
-            result.push_back(this->matrix[row][col] + TO_CHAR);
-            result.push_back(',');
+            result.append(std::to_string(this->matrix[row][col])+',');
         }
-        result.push_back(';');
+        result.pop_back();
+        result.push_back('\n');
     }
+    result.append(pointToString(this->initialState));
+    result.append(pointToString(this->goalState));
     return result;
 }
 

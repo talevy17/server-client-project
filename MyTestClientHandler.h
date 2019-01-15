@@ -18,7 +18,7 @@ public:
             Solver<string,string>* solver);
     virtual void handleClient(int sockfd);
     void getInput(string &str);
-    bool shouldStop();
+    virtual bool shouldStop();
 };
 
 

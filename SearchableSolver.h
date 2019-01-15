@@ -9,10 +9,10 @@
 using namespace std;
 typedef vector<State<Node>*> stateVec;
 
-class SearchableSolver : public Solver<Matrix, string> {
+class SearchableSolver : public Solver<string, string> {
 public:
-    virtual string solve(Matrix problem);
-    string fromStatesVectorToString (stateVec solution);
+    virtual string solve(string problem);
+    string fromStatesVectorToString(vector<State<Node>*> solution);
 };
 
 

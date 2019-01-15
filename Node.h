@@ -65,7 +65,31 @@ public:
     * @param other
     * @return
     */
-    bool operator== (const Node& other);
+    bool operator==(const Node &other);
+    /**
+     * represent position of nodes. - left
+     * @param other
+     * @return
+     */
+    bool operator<(const Node &other);
+    /**
+     * represent position of nodes. - right
+     * @param other
+     * @return
+     */
+    bool operator>(const Node &other);
+    /**
+     * represent position of nodes. - down
+     * @param other
+     * @return
+     */
+    bool operator<=(const Node &other);
+    /**
+     * represent position of nodes. - up
+     * @param other
+     * @return
+     */
+    bool operator>=(const Node &other);
 
     Node(const Node &other);
 

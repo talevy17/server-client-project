@@ -10,7 +10,7 @@ static void *threadLoop(int sockfd, ClientHandler *client, bool* isRunning) {
         //if this is not the first client - wait only 1 sec for connection
         if (!first) {
             timeval timeout;
-            timeout.tv_sec = 1;
+            timeout.tv_sec = 10;
             timeout.tv_usec = 0;
             setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));
         }
