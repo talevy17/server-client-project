@@ -14,7 +14,7 @@ using namespace std;
  * @param argv
  * @return
  */
-int main(int argc, char  *argv[]) {
+int main(int argc, char *argv[]) {
     if (argc<2){throw "Not enough arguments";}
     int port = stoi(argv[1]);
     SearchableSolver searchableSolver;
@@ -26,5 +26,4 @@ int main(int argc, char  *argv[]) {
     while (server.isConnected()){}
     server.stop();
     matrixManager.saveToFile();
-
 }

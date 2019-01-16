@@ -6,7 +6,7 @@
 #include "MatrixClientHandler.h"
 
 #define BUF 256
-#define DELIM "end\n"
+#define END "end\n"
 
 /**
  * constructor
@@ -47,12 +47,13 @@ void MatrixClientHandler::handleClient(int sockfd) {
 }
 
 /**
- * delete end of input
+ * function delete word from string
  * @param input
+ * @param delim
  */
-void deleteDelim(string &input) {
-    ssize_t it = input.find(DELIM);
-    input = input.substr(0,it);
+void deleteDelim(string &input, string delim){
+    ssize_t end = input.find(delim);
+    input = input.substr(0,end-1);
 }
 
 /**
@@ -64,7 +65,7 @@ void MatrixClientHandler::getInput(string &problem) {
     char buffer[BUF];
     string buff;
     //while the user didn't send "end"
-    while (buff.find("end") == string::npos) {
+    while (buff.find(END) == string::npos) {
         valread = read(sockfd, buffer, BUF);
         if (valread < 0) {
             perror("Error reading from socket");
@@ -76,9 +77,8 @@ void MatrixClientHandler::getInput(string &problem) {
         buff += string(buffer);
     }
     problem.append(buff);
-    deleteDelim(problem);
+    deleteDelim(problem, END);
 }
-
 
 
 /**
