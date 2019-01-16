@@ -48,6 +48,8 @@ public:
      * @return bool isEmpty.
      */
     virtual bool isEmpty() = 0;
+
+    virtual ~PriorityQueue(){ }
 };
 
 #endif //SERVER_CLIENT_PROJECT_PRIORITYQUEUE_H

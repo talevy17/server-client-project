@@ -1,8 +1,6 @@
 
 #include "Matrix.h"
 
-#define TO_CHAR 48
-
 /**
  * CTOR
  * @param rows
@@ -132,4 +130,16 @@ bool Matrix::wasVisited(State<Node> *node) {
 void Matrix::visit(State<Node> *node) {
 
     this->states[node] = true;
+}
+
+
+Matrix:: ~Matrix(){
+    std::map<State<Node>*, bool, functor> :: iterator it;
+    for (it = this->states.begin(); it != this->states.end() ; ++it){
+        delete(it->first);
+    }
+    for( int i = 0 ; i < n ; i++ ) {
+        delete[] matrix[i];
+    }
+    delete[] matrix;
 }

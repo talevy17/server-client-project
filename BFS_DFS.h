@@ -24,17 +24,20 @@ public:
      * @return solution
      */
     virtual Solution search(Searchable<T> *searchable) {
-        State<T> *curr = searchable->getInitialState();
-        this->openList->push(curr);
+        vector<State<T>*> allStates;
+        State<T> *init = searchable->getInitialState();
+        State<T> *goal = searchable->getGoalState();
+        allStates.push_back(init);
+        allStates.push_back(goal);
+        this->openList->push(new CoreState<T>(init));
         // dfs/bfs
         while (!this->openList->isEmpty()) {
-            curr = this->popOpenList();
+            State<T>* curr = this->popOpenList();
+            allStates.push_back(curr);
             //if we got to the goal state - stop and return trackBack
-            if (*curr == *searchable->getGoalState()) {
-                Solution sol = this->trackBack(curr, searchable->getInitialState());
-                while (!this->openList->isEmpty()) {
-                    delete(this->openList->pop());
-                }
+            if (*curr == *goal) {
+                Solution sol = this->trackBack(curr, init);
+                for (auto s : allStates){ delete(s); }
                 return sol;
             }
             //if its the first time visiting - mark as visited.

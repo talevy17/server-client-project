@@ -31,5 +31,13 @@ public:
 
     virtual bool isEmpty() { return this->elements.empty(); }
 
+    virtual ~Stack() {
+        while (!this->elements.empty()) {
+            T elem = this->elements.top();
+            this->elements.pop();
+            delete elem;
+        }
+    }
+
 };
 #endif //SERVER_CLIENT_PROJECT_STACK_H
