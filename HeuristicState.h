@@ -29,18 +29,9 @@ public:
      * @param st
      * @param heurCost
      */
-    HeuristicState(State<T> *st, int heurCost) {
+    HeuristicState(int heurCost, State<T> *st) {
         this->state = st;
         this->cost = heurCost;
-    }
-
-    /**
-     * CCTOR.
-     * @param other
-     */
-    HeuristicState(HeuristicState &other) {
-        this->cost = other.getHeurCost();
-        this->state = new CoreState<T>(other.getCoreState());
     }
 
     /**

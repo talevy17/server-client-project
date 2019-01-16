@@ -67,21 +67,24 @@ public:
                 state->setCost((*(this->h))(curr, goalState));
                 //if the node was never visited at all.
                 if (closedIter == closed.end() && nodeIndex == -1) {
-                    this->openList->push(new HeuristicState<T>(*state));
+                    this->openList->push(new HeuristicState<T>(state->getHeurCost(),
+                            new CoreState<T>(state->getCoreState())));
                     //the node was visited/
                 } else {
                     //if it's not in openList
                     if (nodeIndex == -1) {
                         //if the cost is better than the one in the closed list.
                         if (*state < **closedIter) {
-                            this->openList->push(new HeuristicState<T>(*state));
+                            this->openList->push(new HeuristicState<T>(state->getHeurCost(),
+                                    new CoreState<T>(state->getCoreState())));
                         }
                         //it's in openList
                     } else {
                         //if the cost is better than the one in the openList, replace it.
                         State<T> *temp = this->openList->getElement(nodeIndex);
                         if (*state < *(temp)) {
-                            this->openList->replace(new HeuristicState<T>(*state), nodeIndex);
+                            this->openList->replace((new HeuristicState<T>(state->getHeurCost(),
+                                    new CoreState<T>(state->getCoreState()))), nodeIndex);
                             delete (temp);
                         }
                     }
