@@ -10,6 +10,7 @@
 #include "SearchableSolver.h"
 #include "Stack.h"
 #include "FileCacheManager.h"
+#include "MatrixCacheManager.h"
 
 using namespace std;
 
@@ -35,7 +36,6 @@ string randMat (int row, int col){
 }
 
 int main() {
-
     //10X10
     string input10 = "2,10,-1,7,5,7,10,-1,-1,1\n"
                      "2,7,2,7,11,10,1,6,4,4\n"
@@ -245,7 +245,6 @@ int main() {
                      "0,0 \n"
                      "39,39 \n";
 
-
     //42x42
     string input42 = "2,10,-1,7,5,7,10,-1,-1,1,2,7,2,7,11,10,-1,6,4,4,11,8,3,-1,2,2,2,7,7,7,5,6,6,6,5,3,1,4,7,10,-1,-1\n"
                      "9,11,8,1,2,8,11,6,5,10,7,8,8,9,2,2,4,1,9,9,8,3,8,5,10,9,1,5,1,3,6,9,2,3,2,8,3,2,7,1,1,2\n"
@@ -291,8 +290,6 @@ int main() {
                      "4,8,1,4,3,3,8,9,10,5,1,11,6,8,5,2,11,6,8,7,1,4,7,8,7,11,2,4,7,3,9,11,4,2,4,7,10,4,8,1,1,5 \n"
                      "0,0 \n"
                      "41,41 \n";
-
-
 
     //45x45
     string input45 = "2,10,-1,7,5,7,10,-1,-1,1,2,7,2,7,11,10,-1,6,4,4,11,8,3,-1,2,2,2,7,7,7,5,6,6,6,5,3,1,4,7,10,-1,-1,-1,11,8\n"
@@ -400,13 +397,16 @@ int main() {
 //     bfs :
 //    BFS_DFS<vector<State<Node> *>, Node> b(new Queue<State<Node> *>);
 //    vector<State<Node> *> vec = b.search(&m);
-/*
+
     SearchableSolver s;
     string p = s.solve(input25);
-    FileCacheManager fileCacheManager;
+    MatrixCacheManager fileCacheManager;
     fileCacheManager.save(input25, p);
+    fileCacheManager.save(input10, p);
+    fileCacheManager.save(input15, p);
+    fileCacheManager.save(input30, p);
     fileCacheManager.saveToFile();
-*/
+
 
 
 /*

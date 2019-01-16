@@ -1,24 +1,37 @@
 #include <fstream>
 #include "MatrixCacheManager.h"
-#define FILE_NAME "MatrixCacheManager"
 
-MatrixCacheManager:: MatrixCacheManager(){
+#define FILE_NAME "MatrixCacheManager.txt"
+
+MatrixCacheManager::MatrixCacheManager() {
     loadFromFile();
 }
+
 /**
  * the function open the CacheManager file and load it to map
  * of problem and solution.
  */
-void MatrixCacheManager:: loadFromFile() {
+void MatrixCacheManager::loadFromFile() {
     //open the file
     fstream matTrackMap;
     matTrackMap.open(FILE_NAME, ios::in | ios::app);
     if (!matTrackMap.is_open()) { throw "file not found"; }
     //load to map
-    string line;
-    while (getline(matTrackMap,line)) {
-
-        //this->matrixTrackSolution.insert(pair<string, string>(key, value));
+    string line, mat, track;
+    while (getline(matTrackMap, line)) {
+        while (line.compare("end")) {
+            if (line == ""){
+                getline(matTrackMap,line);
+                continue;
+            }
+            if (line.at(0) == 'r') {
+                track.append(line.substr(1, line.size() - 1));
+            } else {
+                mat.append(line+" \n");
+            }
+            getline(matTrackMap,line);
+        }
+        this->matrixTrackSolution.insert(pair<string, string>(mat, track));
     }
 }
 
@@ -42,7 +55,7 @@ void MatrixCacheManager::saveToFile() {
     if (!cacheManage.is_open()) { throw "file not found"; }
     //save to file
     for (pair<string, string> ps : this->matrixTrackSolution) {
-        cacheManage << ps.first  << "end" << ps.second << endl;
+        cacheManage << ps.first << endl << "r" << ps.second << endl << "end" << endl;
     }
 }
 
