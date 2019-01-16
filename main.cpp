@@ -24,5 +24,6 @@ int main(int argc, char  *argv[]) {
     server.open(port,&matrixClientHandler);
     //while there are clients.
     while (server.isConnected()){}
+    server.stop();
     matrixManager.saveToFile();
 }
