@@ -2,13 +2,18 @@
 #include <unistd.h>
 #include <strings.h>
 #include <cstring>
-#include "MyTestClientHandler.h"
+#include "MatrixClientHandler.h"
 
 #define BUF 256
 
-
-MyTestClientHandler::MyTestClientHandler(CacheManager<string, string> *cacheManager,
-                                         Solver<string, string> *solver) {
+/**
+ * constructor
+ * @param cacheManager
+ * @param solver
+ */
+MatrixClientHandler::MatrixClientHandler(CacheManager<string, string> *cacheManager,
+                                         Solver<string, string> *solver,
+                                         pthread_mutex_t &mutex) : mutex(mutex) {
     this->manager = cacheManager;
     this->solver = solver;
     this->stop = false;
@@ -20,16 +25,21 @@ MyTestClientHandler::MyTestClientHandler(CacheManager<string, string> *cacheMana
  * if there isn't - solve and return it to the server.
  * @param sockfd
  */
-void MyTestClientHandler::handleClient(int sockfd) {
+void MatrixClientHandler::handleClient(int sockfd) {
     this->sockfd = sockfd;
     string problem;
     getInput(problem);
     string solution;
     //gets the solution
     if (this->manager->isThereASolution(problem)) {
+        pthread_mutex_lock(&mutex);
         solution = this->manager->getSolution(problem);
+        pthread_mutex_unlock(&mutex);
     } else {
         solution = this->solver->solve(problem);
+        pthread_mutex_lock(&mutex);
+        this->manager->save(problem,solution);
+        pthread_mutex_unlock(&mutex);
     }
     ::send(this->sockfd, solution.c_str(), strlen(solution.c_str()), 0);
 }
@@ -38,7 +48,7 @@ void MyTestClientHandler::handleClient(int sockfd) {
  * the function read lines of input from the server
  * @return string - problem
  */
-void MyTestClientHandler::getInput(string &problem) {
+void MatrixClientHandler::getInput(string &problem) {
     ssize_t valread;
     char buffer[BUF] = {0};
     listen(this->sockfd, 5);
@@ -57,6 +67,6 @@ void MyTestClientHandler::getInput(string &problem) {
 /**
  * @return true - if should stop, false - else
  */
-bool MyTestClientHandler::shouldStop() {
+bool MatrixClientHandler::shouldStop() {
     return this->stop;
 }

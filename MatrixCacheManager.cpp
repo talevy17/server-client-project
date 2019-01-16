@@ -2,6 +2,7 @@
 #include "MatrixCacheManager.h"
 
 #define FILE_NAME "MatrixCacheManager.txt"
+#define SOLUTION 'r'
 
 MatrixCacheManager::MatrixCacheManager() {
     loadFromFile();
@@ -17,17 +18,18 @@ void MatrixCacheManager::loadFromFile() {
     matTrackMap.open(FILE_NAME, ios::in | ios::app);
     if (!matTrackMap.is_open()) { throw "file not found"; }
     //load to map
-    string line, mat, track;
+    string line;
     while (getline(matTrackMap, line)) {
+        string mat, track;
         while (line.compare("end")) {
             if (line == ""){
                 getline(matTrackMap,line);
                 continue;
             }
-            if (line.at(0) == 'r') {
+            if (line.at(0) == SOLUTION) {
                 track.append(line.substr(1, line.size() - 1));
             } else {
-                mat.append(line+" \n");
+                mat.append(line+"\n");
             }
             getline(matTrackMap,line);
         }
@@ -55,7 +57,7 @@ void MatrixCacheManager::saveToFile() {
     if (!cacheManage.is_open()) { throw "file not found"; }
     //save to file
     for (pair<string, string> ps : this->matrixTrackSolution) {
-        cacheManage << ps.first << endl << "r" << ps.second << endl << "end" << endl;
+        cacheManage << ps.first << endl << SOLUTION << ps.second << endl << "end" << endl;
     }
 }
 
