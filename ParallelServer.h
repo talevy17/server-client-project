@@ -19,6 +19,8 @@ class ParallelServer : public server_side::Server {
     int sockfd;
     bool isRunning;
     std::vector<thread> threads;
+
+    int acceptClient();
 public:
 
     /**
