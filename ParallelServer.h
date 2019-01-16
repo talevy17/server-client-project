@@ -12,16 +12,31 @@
 #include <thread>
 #include <queue>
 
+/**
+ * accepts clients on parallel threads and handle their requests.
+ */
 class ParallelServer : public server_side::Server {
     int sockfd;
     bool isRunning;
     std::queue<thread> threads;
 public:
 
+    /**
+    * opens the connection and starts accepting clients and handling them parallel.
+    * @param port
+    * @param client
+    */
     virtual void open(int port, ClientHandler *client);
 
+    /**
+    * check if the server is still accepting clients for outside use.
+    * @return bool isRunning
+    */
     virtual bool isConnected();
 
+    /**
+    * waits for all the threads to finish their client handling and closes the socket.
+    */
     virtual void stop();
 };
 

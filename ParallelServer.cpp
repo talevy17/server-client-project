@@ -1,6 +1,12 @@
 
 #include "ParallelServer.h"
 
+/**
+ * thread function, handles a client and closes the socket when done.
+ * @param sockfd
+ * @param client
+ * @return
+ */
 static void *start(int sockfd, ClientHandler *client) {
     while (!client->shouldStop()) {
         client->handleClient(sockfd);
@@ -9,7 +15,11 @@ static void *start(int sockfd, ClientHandler *client) {
     pthread_exit(nullptr);
 }
 
-
+/**
+ * opens the connection and starts accepting clients and handling them parallel.
+ * @param port
+ * @param client
+ */
 void ParallelServer::open(int port, ClientHandler *client) {
     int opt = 1;
     struct sockaddr_in server;
@@ -52,18 +62,25 @@ void ParallelServer::open(int port, ClientHandler *client) {
             if (errno == EWOULDBLOCK) {
                 this->isRunning = false;
                 break;
-            } else{
+            } else {
                 perror("other error");
                 exit(EXIT_FAILURE);
             }
         }
-        thread t1(start,newsockfd, client);
+        thread t1(start, newsockfd, client);
         this->threads.push(t1);
     }
 }
 
-bool ParallelServer::isConnected() {return this->isRunning;}
+/**
+ * check if the server is still accepting clients for outside use.
+ * @return bool isRunning
+ */
+bool ParallelServer::isConnected() { return this->isRunning; }
 
+/**
+ * waits for all the threads to finish their client handling and closes the socket.
+ */
 void ParallelServer::stop() {
     while (!this->threads.empty()) {
         this->threads.front().join();
