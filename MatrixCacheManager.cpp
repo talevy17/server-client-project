@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iostream>
 #include "MatrixCacheManager.h"
 
 #define FILE_NAME "MatrixCacheManager.txt"
@@ -22,18 +23,17 @@ void MatrixCacheManager::loadFromFile() {
     while (getline(matTrackMap, line)) {
         string mat, track;
         while (line.compare("end")) {
-            if (line == ""){
-                getline(matTrackMap,line);
+            if (line == "") {
+                getline(matTrackMap, line);
                 continue;
-            }
-            if (line.at(0) == SOLUTION) {
+            } else if (line.at(0) == SOLUTION) {
                 track.append(line.substr(1, line.size() - 1));
             } else {
-                mat.append(line+"\n");
+                mat.append(line + '\n');
             }
-            getline(matTrackMap,line);
+            getline(matTrackMap , line);
         }
-        this->matrixTrackSolution.insert(pair<string, string>(mat, track));
+        this->matrixTrackSolution.insert(pair<string, string>(mat.substr(0,mat.size()-1), track));
     }
 }
 
@@ -43,7 +43,9 @@ void MatrixCacheManager::loadFromFile() {
  * @param solution
  */
 void MatrixCacheManager::save(string problem, string solution) {
+    unique_lock<mutex> ul(this->mut);
     this->matrixTrackSolution[problem] = solution;
+    ul.unlock();
 }
 
 /**
@@ -56,8 +58,8 @@ void MatrixCacheManager::saveToFile() {
     ofstream cacheManage(FILE_NAME, ios::trunc);
     if (!cacheManage.is_open()) { throw "file not found"; }
     //save to file
-    for (pair<string, string> ps : this->matrixTrackSolution) {
-        cacheManage << ps.first << endl << SOLUTION << ps.second << endl << "end" << endl;
+    for (pair<string, string> inMap : this->matrixTrackSolution) {
+        cacheManage << inMap.first << endl << SOLUTION << inMap.second << endl << "end" << endl;
     }
 }
 
@@ -67,7 +69,10 @@ void MatrixCacheManager::saveToFile() {
  * @return solution
  */
 string MatrixCacheManager::getSolution(string problem) {
-    return this->matrixTrackSolution[problem];
+    unique_lock<mutex> ul(this->mut);
+    string solution = this->matrixTrackSolution[problem];
+    ul.unlock();
+    return solution;
 }
 
 /**
@@ -76,5 +81,8 @@ string MatrixCacheManager::getSolution(string problem) {
  * @return true- if there is solution , false - else
  */
 bool MatrixCacheManager::isThereASolution(string problem) {
-    return this->matrixTrackSolution.find(problem) != this->matrixTrackSolution.end();
+    unique_lock<mutex> ul(this->mut);
+    bool f = this->matrixTrackSolution.find(problem) != this->matrixTrackSolution.end();
+    ul.unlock();
+    return f;
 }

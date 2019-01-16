@@ -113,6 +113,7 @@ Matrix Interpreter::parser(strvec rowVec, string init, string goal) {
 Matrix Interpreter::stringToMatrix(string input) {
     strvec element;
     splitLine(input, element, '\n');
+    //pop end of input
     string end = getLast(element);
     string begin = getLast(element);
     return parser(element, begin, end);

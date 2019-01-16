@@ -13,7 +13,6 @@ class MatrixClientHandler : public ClientHandler {
     Solver<string,string>* solver;
     int sockfd;
     bool stop;;
-    pthread_mutex_t &mutex;
 public:
     /**
      * constructor
@@ -22,7 +21,7 @@ public:
      * @param mutex1
      */
     MatrixClientHandler(CacheManager<string, string>* cacheManager,
-            Solver<string,string>* solver, pthread_mutex_t &mutex1);
+            Solver<string,string>* solver);
     /**
      * connect to client, get input and solve problems
      * @param sockfd
@@ -38,6 +37,8 @@ public:
      * @return true if there is no input, false else.
      */
     virtual bool shouldStop();
+
+    virtual void setStop ();
 };
 
 
