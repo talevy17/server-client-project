@@ -162,6 +162,14 @@ public:
      * @return bool isEmpty.
      */
     bool isEmpty() {return this->elements.empty();}
+
+    virtual ~MinHeap() {
+        while (!this->elements.empty()) {
+            T elem = this->elements.back();
+            this->elements.pop_back();
+            delete (elem);
+        }
+    }
 };
 
 

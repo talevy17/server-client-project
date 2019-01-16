@@ -28,6 +28,14 @@ public:
     virtual T getElement(int i) { return this->elements.front(); }
 
     virtual bool isEmpty() { return this->elements.empty(); }
+
+    virtual ~Queue() {
+        while (!this->elements.empty()) {
+            T elem = this->elements.front();
+            this->elements.pop();
+            delete elem;
+        }
+    }
 };
 
 #endif //SERVER_CLIENT_PROJECT_QUEUE_H

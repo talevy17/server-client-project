@@ -80,6 +80,8 @@ public:
     virtual bool wasVisited(State<Node>* node);
 
     virtual void visit(State<Node>* node);
+
+    ~Matrix();
 };
 
 
