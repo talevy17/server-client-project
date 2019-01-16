@@ -17,8 +17,9 @@ void MatrixCacheManager::loadFromFile() {
     matTrackMap.open(FILE_NAME, ios::in | ios::app);
     if (!matTrackMap.is_open()) { throw "file not found"; }
     //load to map
-    string line, mat, track;
+    string line;
     while (getline(matTrackMap, line)) {
+        string mat, track;
         while (line.compare("end")) {
             if (line == ""){
                 getline(matTrackMap,line);
@@ -27,7 +28,7 @@ void MatrixCacheManager::loadFromFile() {
             if (line.at(0) == 'r') {
                 track.append(line.substr(1, line.size() - 1));
             } else {
-                mat.append(line+" \n");
+                mat.append(line+"\n");
             }
             getline(matTrackMap,line);
         }

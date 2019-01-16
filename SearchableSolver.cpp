@@ -11,6 +11,11 @@ enum POS {
     UP, DOWN, LEFT, RIGHT
 };
 
+/**
+ * get position and return direction
+ * @param position
+ * @return string direction
+ */
 string positionToString(POS position) {
     switch (position) {
         case 0: return "up ";
@@ -20,6 +25,11 @@ string positionToString(POS position) {
     }
 }
 
+/**
+ *
+ * @param solution
+ * @return string - track
+ */
 string SearchableSolver::fromStatesVectorToString(vector<State<Node> *> solution) {
     string result;
     if (solution.empty()){ return "-1";}

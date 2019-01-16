@@ -8,14 +8,15 @@
 
 using namespace std;
 
-class MyTestClientHandler : public ClientHandler {
+class MatrixClientHandler : public ClientHandler {
     CacheManager<string,string>* manager;
     Solver<string,string>* solver;
     int sockfd;
-    bool stop;
+    bool stop;;
+    pthread_mutex_t &mutex;
 public:
-    MyTestClientHandler(CacheManager<string, string>* cacheManager,
-            Solver<string,string>* solver);
+    MatrixClientHandler(CacheManager<string, string>* cacheManager,
+            Solver<string,string>* solver, pthread_mutex_t &mutex1);
     virtual void handleClient(int sockfd);
     void getInput(string &str);
     virtual bool shouldStop();
