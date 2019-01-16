@@ -3,10 +3,12 @@
 
 #include <map>
 #include <fstream>
+#include <mutex>
 #include "CacheManager.h"
 
 class FileCacheManager : public CacheManager<string, string> {
     map<string, string> problemSolutionMap;
+    mutex mut;
 public:
     FileCacheManager();
 

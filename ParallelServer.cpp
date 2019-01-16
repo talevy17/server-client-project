@@ -1,4 +1,5 @@
-
+#include <iostream>
+#include <cstring>
 #include "ParallelServer.h"
 
 /**
@@ -7,11 +8,12 @@
  * @param client
  * @return
  */
-static void *start(int sockfd, ClientHandler *client) {
+void *start(int sockfd, ClientHandler *client) {
     while (!client->shouldStop()) {
         client->handleClient(sockfd);
     }
     close(sockfd);
+    client->setStop();
     pthread_exit(nullptr);
 }
 
@@ -38,7 +40,10 @@ void ParallelServer::open(int port, ClientHandler *client) {
     server.sin_addr.s_addr = INADDR_ANY;
     server.sin_port = htons(port);
 
-    // Forcefully attaching socket to the port 8080
+    //Set all bits of the padding field to 0
+    memset(server.sin_zero, '\0', sizeof server.sin_zero);
+
+    // Forcefully attaching socket to the port
     if (bind(sockfd, (struct sockaddr *) &server, sizeof(server)) < 0) {
         perror("bind failed");
         exit(EXIT_FAILURE);
@@ -71,7 +76,7 @@ void ParallelServer::open(int port, ClientHandler *client) {
             }
         }
         thread t2(start, newsockfd, client);
-        this->threads.push_back(std::move(t1));
+        this->threads.push_back(std::move(t2));
     }
 }
 

@@ -10,6 +10,8 @@ public:
     virtual void handleClient(int sockfd) = 0;
 
     virtual bool shouldStop() = 0;
+
+    virtual void setStop () = 0;
 };
 
 #endif //SERVER_CLIENT_PROJECT_CLIENTHANDLER_H

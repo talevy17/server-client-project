@@ -1,3 +1,4 @@
+#include <iostream>
 #include "FileCacheManager.h"
 
 #define FILE_NAME "problemSolutionMap.txt"
@@ -33,7 +34,11 @@ void FileCacheManager::loadFromFile() {
  * @param solution
  */
 void FileCacheManager::save(string problem, string solution) {
+    cout << problem << endl;
+
+    unique_lock<mutex> ul(this->mut);
     this->problemSolutionMap[problem] = solution;
+    ul.unlock();
 }
 
 /**
@@ -57,7 +62,10 @@ void FileCacheManager::saveToFile() {
  * @return solution
  */
 string FileCacheManager::getSolution(string problem) {
-    return this->problemSolutionMap[problem];
+    unique_lock<mutex> ul(this->mut);
+    string p =  this->problemSolutionMap[problem];
+    ul.unlock();
+    return p;
 }
 
 /**
@@ -66,5 +74,8 @@ string FileCacheManager::getSolution(string problem) {
  * @return true- if there is solution , false - else
  */
 bool FileCacheManager::isThereASolution(string problem) {
-    return this->problemSolutionMap.find(problem) != this->problemSolutionMap.end();
+    unique_lock<mutex> ul(this->mut);
+    bool f =  this->problemSolutionMap.find(problem) != this->problemSolutionMap.end();
+    ul.unlock();
+    return f;
 }

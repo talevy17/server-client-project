@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iostream>
 #include "MatrixCacheManager.h"
 
 #define FILE_NAME "MatrixCacheManager.txt"
@@ -43,7 +44,9 @@ void MatrixCacheManager::loadFromFile() {
  * @param solution
  */
 void MatrixCacheManager::save(string problem, string solution) {
+    unique_lock<mutex> ul(this->mut);
     this->matrixTrackSolution[problem] = solution;
+    ul.unlock();
 }
 
 /**
@@ -67,7 +70,10 @@ void MatrixCacheManager::saveToFile() {
  * @return solution
  */
 string MatrixCacheManager::getSolution(string problem) {
-    return this->matrixTrackSolution[problem];
+    unique_lock<mutex> ul(this->mut);
+    string solution = this->matrixTrackSolution[problem];
+    ul.unlock();
+    return solution;
 }
 
 /**
@@ -76,5 +82,8 @@ string MatrixCacheManager::getSolution(string problem) {
  * @return true- if there is solution , false - else
  */
 bool MatrixCacheManager::isThereASolution(string problem) {
-    return this->matrixTrackSolution.find(problem) != this->matrixTrackSolution.end();
+    unique_lock<mutex> ul(this->mut);
+    bool f =  this->matrixTrackSolution.find(problem) != this->matrixTrackSolution.end();
+    ul.unlock();
+    return f;
 }
