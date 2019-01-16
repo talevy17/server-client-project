@@ -2,6 +2,7 @@
 #include "MatrixCacheManager.h"
 
 #define FILE_NAME "MatrixCacheManager.txt"
+#define SOLUTION 'r'
 
 MatrixCacheManager::MatrixCacheManager() {
     loadFromFile();
@@ -25,7 +26,7 @@ void MatrixCacheManager::loadFromFile() {
                 getline(matTrackMap,line);
                 continue;
             }
-            if (line.at(0) == 'r') {
+            if (line.at(0) == SOLUTION) {
                 track.append(line.substr(1, line.size() - 1));
             } else {
                 mat.append(line+"\n");
@@ -56,7 +57,7 @@ void MatrixCacheManager::saveToFile() {
     if (!cacheManage.is_open()) { throw "file not found"; }
     //save to file
     for (pair<string, string> ps : this->matrixTrackSolution) {
-        cacheManage << ps.first << endl << "r" << ps.second << endl << "end" << endl;
+        cacheManage << ps.first << endl << SOLUTION << ps.second << endl << "end" << endl;
     }
 }
 

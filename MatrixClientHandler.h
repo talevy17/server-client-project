@@ -15,10 +15,28 @@ class MatrixClientHandler : public ClientHandler {
     bool stop;;
     pthread_mutex_t &mutex;
 public:
+    /**
+     * constructor
+     * @param cacheManager
+     * @param solver
+     * @param mutex1
+     */
     MatrixClientHandler(CacheManager<string, string>* cacheManager,
             Solver<string,string>* solver, pthread_mutex_t &mutex1);
+    /**
+     * connect to client, get input and solve problems
+     * @param sockfd
+     */
     virtual void handleClient(int sockfd);
+    /**
+     * get input from client
+     * @param str
+     */
     void getInput(string &str);
+    /**
+     *
+     * @return true if there is no input, false else.
+     */
     virtual bool shouldStop();
 };
 
