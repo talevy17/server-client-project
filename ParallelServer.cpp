@@ -67,8 +67,9 @@ void ParallelServer::open(int port, ClientHandler *client) {
                 exit(EXIT_FAILURE);
             }
         }
-        thread t1(start, newsockfd, client);
-        this->threads.push(t1);
+        thread *t1 = new thread (start, newsockfd, client);
+        this->threads.push_back(t1);
+        //this->threads.push_back(t1);
     }
 }
 
@@ -82,9 +83,9 @@ bool ParallelServer::isConnected() { return this->isRunning; }
  * waits for all the threads to finish their client handling and closes the socket.
  */
 void ParallelServer::stop() {
-    while (!this->threads.empty()) {
-        this->threads.front().join();
-        this->threads.pop();
+    for (auto tr: this->threads) {
+        tr->join();
+        delete tr;
     }
     close(this->sockfd);
 }

@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <thread>
-#include <queue>
+#include <vector>
 
 /**
  * accepts clients on parallel threads and handle their requests.
@@ -18,7 +18,7 @@
 class ParallelServer : public server_side::Server {
     int sockfd;
     bool isRunning;
-    std::queue<thread> threads;
+    std::vector<thread*> threads;
 public:
 
     /**
